@@ -13,26 +13,50 @@ class PlayPage extends StatelessWidget {
     return Scaffold(
       body: Consumer<SettingViewModel>(
         builder: (context, model, _) {
-          return Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+          return Stack(
             children: [
-              Padding(
-                padding: EdgeInsets.all(12.h),
-                child: Text(
-                  '難易度 : ${model.difficulty}',
-                  style: TextStyle(
-                    fontSize: 30.sp,
-                    color: textColor,
-                  ),
-                ),
-              ),
-              Row(
+              Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Padding(
                     padding: EdgeInsets.all(12.h),
                     child: Text(
-                      '第${model.no}問',
+                      '難易度 : ${model.difficulty}',
+                      style: TextStyle(
+                        fontSize: 30.sp,
+                        color: textColor,
+                      ),
+                    ),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.all(12.h),
+                        child: Text(
+                          '第${model.no}問',
+                          style: TextStyle(
+                            fontSize: 30.sp,
+                            color: textColor,
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(12.h),
+                        child: Text(
+                          '${model.correctNum} / ${model.questionNum}',
+                          style: TextStyle(
+                            fontSize: 20.sp,
+                            color: textColor,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(12.h),
+                    child: Text(
+                      '${model.correct}',
                       style: TextStyle(
                         fontSize: 30.sp,
                         color: textColor,
@@ -40,144 +64,211 @@ class PlayPage extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.all(12.h),
-                    child: Text(
-                      '${model.correctNum} / ${model.questionNum}',
-                      style: TextStyle(
-                        fontSize: 20.sp,
-                        color: textColor,
+                    padding: EdgeInsets.fromLTRB(0, 0, 0, 10.w),
+                    child: Center(
+                      child: SizedBox(
+                        width: 335.w,
+                        child: TextField(
+                          maxLines: 1,
+                          cursorColor: textColor,
+                          decoration: InputDecoration(
+                            contentPadding: EdgeInsets.only(
+                              left: 20.w,
+                            ),
+                            border: const OutlineInputBorder(),
+                            labelText: 'SAMPLE',
+                          ),
+                          style: TextStyle(
+                            fontSize: 25.sp,
+                            fontWeight: FontWeight.w800,
+                            color: textColor,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(8.h),
+                    child: SizedBox(
+                      height: 40.h,
+                      width: 200.w,
+                      child: GestureDetector(
+                        child: DecoratedBox(
+                          decoration: BoxDecoration(color: Colors.orange),
+                          child: Center(
+                            child: Text(
+                              '0',
+                              style: TextStyle(
+                                fontSize: 30.sp,
+                                color: textColor,
+                              ),
+                            ),
+                          ),
+                        ),
+                        onTap: () {
+                          ansCheck(0, context, model);
+                        },
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(8.h),
+                    child: SizedBox(
+                      height: 40.h,
+                      width: 200.w,
+                      child: GestureDetector(
+                        child: DecoratedBox(
+                          decoration: BoxDecoration(color: Colors.orange),
+                          child: Center(
+                            child: Text(
+                              '1',
+                              style: TextStyle(
+                                fontSize: 30.sp,
+                                color: textColor,
+                              ),
+                            ),
+                          ),
+                        ),
+                        onTap: () {
+                          ansCheck(1, context, model);
+                        },
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(8.h),
+                    child: SizedBox(
+                      height: 40.h,
+                      width: 200.w,
+                      child: GestureDetector(
+                        child: DecoratedBox(
+                          decoration: BoxDecoration(color: Colors.orange),
+                          child: Center(
+                            child: Text(
+                              '2',
+                              style: TextStyle(
+                                fontSize: 30.sp,
+                                color: textColor,
+                              ),
+                            ),
+                          ),
+                        ),
+                        onTap: () {
+                          ansCheck(2, context, model);
+                        },
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(8.h),
+                    child: SizedBox(
+                      height: 40.h,
+                      width: 200.w,
+                      child: GestureDetector(
+                        child: DecoratedBox(
+                          decoration: BoxDecoration(color: Colors.orange),
+                          child: Center(
+                            child: Text(
+                              '3',
+                              style: TextStyle(
+                                fontSize: 30.sp,
+                                color: textColor,
+                              ),
+                            ),
+                          ),
+                        ),
+                        onTap: () {
+                          ansCheck(3, context, model);
+                        },
                       ),
                     ),
                   ),
                 ],
               ),
-              Padding(
-                padding: EdgeInsets.all(12.h),
-                child: Text(
-                  '${model.correct}',
-                  style: TextStyle(
-                    fontSize: 30.sp,
-                    color: textColor,
-                  ),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(0, 0, 0, 10.w),
-                child: Center(
-                  child: SizedBox(
-                    width: 335.w,
-                    child: TextField(
-                      maxLines: 1,
-                      cursorColor: textColor,
-                      decoration: InputDecoration(
-                        contentPadding: EdgeInsets.only(
-                          left: 20.w,
-                        ),
-                        border: const OutlineInputBorder(),
-                        labelText: 'SAMPLE',
+              Center(
+                child: Visibility(
+                  visible: model.circle,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        height: 200.h,
+                        width: 200.w,
+                        child: Image.asset('assets/true.jpeg'),
                       ),
-                      style: TextStyle(
-                        fontSize: 25.sp,
-                        fontWeight: FontWeight.w800,
-                        color: textColor,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.all(8.h),
-                child: SizedBox(
-                  height: 40.h,
-                  width: 200.w,
-                  child: GestureDetector(
-                    child: DecoratedBox(
-                      decoration: BoxDecoration(color: Colors.orange),
-                      child: Center(
-                        child: Text(
-                          '0',
-                          style: TextStyle(
-                            fontSize: 30.sp,
-                            color: textColor,
+                      Padding(
+                        padding: EdgeInsets.all(8.h),
+                        child: SizedBox(
+                          height: 40.h,
+                          width: 200.w,
+                          child: GestureDetector(
+                            child: DecoratedBox(
+                              decoration: BoxDecoration(color: Colors.green),
+                              child: Center(
+                                child: Text(
+                                  'OK',
+                                  style: TextStyle(
+                                    fontSize: 30.sp,
+                                    color: textColor,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            onTap: () {
+                              if (model.no >= model.questionNum) {
+                                context.go('/result');
+                              }
+                              model.correctNum++;
+                              model.no++;
+                              model.reflesh();
+                            },
                           ),
                         ),
                       ),
-                    ),
-                    onTap: () {
-                      ansCheck(0, context, model);
-                    },
+                    ],
                   ),
                 ),
               ),
-              Padding(
-                padding: EdgeInsets.all(8.h),
-                child: SizedBox(
-                  height: 40.h,
-                  width: 200.w,
-                  child: GestureDetector(
-                    child: DecoratedBox(
-                      decoration: BoxDecoration(color: Colors.orange),
-                      child: Center(
-                        child: Text(
-                          '1',
-                          style: TextStyle(
-                            fontSize: 30.sp,
-                            color: textColor,
+              Center(
+                child: Visibility(
+                  visible: model.cross,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        height: 200.h,
+                        width: 200.w,
+                        child: Image.asset('assets/false.jpeg'),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(8.h),
+                        child: SizedBox(
+                          height: 40.h,
+                          width: 200.w,
+                          child: GestureDetector(
+                            child: DecoratedBox(
+                              decoration: BoxDecoration(color: Colors.green),
+                              child: Center(
+                                child: Text(
+                                  'OK',
+                                  style: TextStyle(
+                                    fontSize: 30.sp,
+                                    color: textColor,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            onTap: () {
+                              if (model.no >= model.questionNum) {
+                                context.go('/result');
+                              }
+                              model.no++;
+                              model.reflesh();
+                            },
                           ),
                         ),
                       ),
-                    ),
-                    onTap: () {
-                      ansCheck(1, context, model);
-                    },
-                  ),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.all(8.h),
-                child: SizedBox(
-                  height: 40.h,
-                  width: 200.w,
-                  child: GestureDetector(
-                    child: DecoratedBox(
-                      decoration: BoxDecoration(color: Colors.orange),
-                      child: Center(
-                        child: Text(
-                          '2',
-                          style: TextStyle(
-                            fontSize: 30.sp,
-                            color: textColor,
-                          ),
-                        ),
-                      ),
-                    ),
-                    onTap: () {
-                      ansCheck(2, context, model);
-                    },
-                  ),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.all(8.h),
-                child: SizedBox(
-                  height: 40.h,
-                  width: 200.w,
-                  child: GestureDetector(
-                    child: DecoratedBox(
-                      decoration: BoxDecoration(color: Colors.orange),
-                      child: Center(
-                        child: Text(
-                          '3',
-                          style: TextStyle(
-                            fontSize: 30.sp,
-                            color: textColor,
-                          ),
-                        ),
-                      ),
-                    ),
-                    onTap: () {
-                      ansCheck(3, context, model);
-                    },
+                    ],
                   ),
                 ),
               ),
@@ -190,17 +281,12 @@ class PlayPage extends StatelessWidget {
 }
 
 void ansCheck(int ans, BuildContext context, SettingViewModel model) {
-  if (ans == model.correct) {
-    print('true');
-    model.correctNum++;
-  } else {
-    print('false');
+  if (model.circle == false && model.cross == false) {
+    if (ans == model.correct) {
+      model.circle = true;
+    } else {
+      model.cross = true;
+    }
+    model.notify();
   }
-  model.no++;
-  if (model.no > model.questionNum) {
-    // Navigator.pushNamedAndRemoveUntil(context, '/result', (route) => false);
-    // Navigator.pushNamed(context, '/result');
-    context.go('/result');
-  }
-  model.reflesh();
 }
