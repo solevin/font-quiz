@@ -8,6 +8,8 @@ class SettingViewModel with ChangeNotifier {
   int no = 1;
   int correct = 0;
   bool mode = false;
+  bool circle = false;
+  bool cross = false;
 
   void init() {
   difficulty = '';
@@ -20,6 +22,8 @@ class SettingViewModel with ChangeNotifier {
   void reflesh(){
     final rand = math.Random();
     correct = rand.nextInt(4);
+    circle = false;
+    cross = false;
     notify();
   }
 
