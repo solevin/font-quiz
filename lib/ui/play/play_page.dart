@@ -97,7 +97,7 @@ class PlayPage extends StatelessWidget {
                           decoration: BoxDecoration(color: Colors.orange),
                           child: Center(
                             child: Text(
-                              '0',
+                              '${model.choise[0]}',
                               style: TextStyle(
                                 fontSize: 30.sp,
                                 color: textColor,
@@ -106,7 +106,7 @@ class PlayPage extends StatelessWidget {
                           ),
                         ),
                         onTap: () {
-                          ansCheck(0, context, model);
+                          ansCheck(model.choise[0], context, model);
                         },
                       ),
                     ),
@@ -121,7 +121,7 @@ class PlayPage extends StatelessWidget {
                           decoration: BoxDecoration(color: Colors.orange),
                           child: Center(
                             child: Text(
-                              '1',
+                              '${model.choise[1]}',
                               style: TextStyle(
                                 fontSize: 30.sp,
                                 color: textColor,
@@ -130,7 +130,7 @@ class PlayPage extends StatelessWidget {
                           ),
                         ),
                         onTap: () {
-                          ansCheck(1, context, model);
+                          ansCheck(model.choise[1], context, model);
                         },
                       ),
                     ),
@@ -145,7 +145,7 @@ class PlayPage extends StatelessWidget {
                           decoration: BoxDecoration(color: Colors.orange),
                           child: Center(
                             child: Text(
-                              '2',
+                              '${model.choise[2]}',
                               style: TextStyle(
                                 fontSize: 30.sp,
                                 color: textColor,
@@ -154,7 +154,7 @@ class PlayPage extends StatelessWidget {
                           ),
                         ),
                         onTap: () {
-                          ansCheck(2, context, model);
+                          ansCheck(model.choise[2], context, model);
                         },
                       ),
                     ),
@@ -169,7 +169,7 @@ class PlayPage extends StatelessWidget {
                           decoration: BoxDecoration(color: Colors.orange),
                           child: Center(
                             child: Text(
-                              '3',
+                              '${model.choise[3]}',
                               style: TextStyle(
                                 fontSize: 30.sp,
                                 color: textColor,
@@ -178,7 +178,7 @@ class PlayPage extends StatelessWidget {
                           ),
                         ),
                         onTap: () {
-                          ansCheck(3, context, model);
+                          ansCheck(model.choise[3], context, model);
                         },
                       ),
                     ),
