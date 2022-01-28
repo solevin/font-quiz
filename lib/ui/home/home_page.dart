@@ -16,7 +16,7 @@ class HomePage extends StatelessWidget {
           children: const [
             MenuItem(
               text: 'Play',
-              route: '/play',
+              route: '/playSetting',
             ),
             MenuItem(
               text: 'View',
@@ -41,7 +41,7 @@ class HomePage extends StatelessWidget {
 
 class MenuItem extends StatelessWidget {
   const MenuItem({
-    Key? key, 
+    Key? key,
     required this.text,
     required this.route,
   }) : super(key: key);
