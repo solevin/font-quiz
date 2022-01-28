@@ -3,14 +3,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_quiz/router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:font_quiz/ui/play/play_setting_view.dart';
-import 'package:provider/provider.dart';
+import 'package:provider/provider.dart' as provider;
 
 void main() {
   runApp(
     ProviderScope(
-      MultiProvider(
+      child: provider.MultiProvider(
         providers: [
-          ChangeNotifierProvider(
+          provider.ChangeNotifierProvider(
             create: (_) => SettingViewModel(),
           ),
         ],
