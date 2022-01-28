@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AppTitleBar extends StatelessWidget implements PreferredSizeWidget {
-  AppTitleBar({Key? key}) : super(key: key);
+  AppTitleBar({Key? key, this.action}) : super(key: key);
 
+  final List<Widget>? action;
   @override
   final Size preferredSize = Size(double.infinity, 15.h);
 
@@ -20,6 +21,7 @@ class AppTitleBar extends StatelessWidget implements PreferredSizeWidget {
           ),
         ),
         elevation: 0,
+        actions: action,
       ),
     );
   }

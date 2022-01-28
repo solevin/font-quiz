@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_quiz/router.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 void main() {
-  runApp(ScreenUtilInit(
-    designSize: const Size(360, 690),
-    builder: MyApp.new,
-  ));
+  runApp(
+    ProviderScope(
+      child: ScreenUtilInit(
+        designSize: const Size(360, 690),
+        builder: MyApp.new,
+      ),
+    ),
+  );
 }
 
 const materialWhite = MaterialColor(
