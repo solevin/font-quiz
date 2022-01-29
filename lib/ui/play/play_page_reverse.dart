@@ -10,322 +10,325 @@ class ReversePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const textColor = Color(0xFF5C4444);
-    return Scaffold(
-      body: Consumer<SettingViewModel>(
-        builder: (context, model, _) {
-          return Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Stack(
-                children: [
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.all(12.h),
-                        child: Text(
-                          '難易度 : ${model.difficulty}',
-                          style: TextStyle(
-                            fontSize: 30.sp,
-                            color: textColor,
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(
+        body: Consumer<SettingViewModel>(
+          builder: (context, model, _) {
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Stack(
+                  children: [
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.all(12.h),
+                          child: Text(
+                            '難易度 : ${model.difficulty}',
+                            style: TextStyle(
+                              fontSize: 30.sp,
+                              color: textColor,
+                            ),
                           ),
                         ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.all(12.h),
+                              child: Text(
+                                '第${model.no}問',
+                                style: TextStyle(
+                                  fontSize: 30.sp,
+                                  color: textColor,
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.all(12.h),
+                              child: Text(
+                                '${model.correctNum} / ${model.questionNum}',
+                                style: TextStyle(
+                                  fontSize: 20.sp,
+                                  color: textColor,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        Padding(
+                          padding: EdgeInsets.all(12.h),
+                          child: Text(
+                            '${fontFamilyToDisplayName[textStyleList[model.correct].fontFamily]}',
+                            style: TextStyle(
+                              fontSize: 30.sp,
+                              color: textColor,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Center(
+                      child: Visibility(
+                        visible: model.circle,
+                        child: SizedBox(
+                          height: 200.h,
+                          width: 200.w,
+                          child: Image.asset('assets/true.jpeg'),
+                        ),
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.all(12.h),
-                            child: Text(
-                              '第${model.no}問',
-                              style: TextStyle(
-                                fontSize: 30.sp,
-                                color: textColor,
+                    ),
+                    Center(
+                      child: Visibility(
+                        visible: model.cross,
+                        child: SizedBox(
+                          height: 200.h,
+                          width: 200.w,
+                          child: Image.asset('assets/false.jpeg'),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.all(8.h),
+                      child: SizedBox(
+                        height: 40.h,
+                        width: 40.w,
+                        child: GestureDetector(
+                          child: DecoratedBox(
+                            decoration: BoxDecoration(
+                              color: changeColor(0, model),
+                            ),
+                            child: Center(
+                              child: Text(
+                                '0',
+                                style: TextStyle(
+                                  fontSize: 30.sp,
+                                  color: textColor,
+                                ),
                               ),
                             ),
                           ),
-                          Padding(
-                            padding: EdgeInsets.all(12.h),
-                            child: Text(
-                              '${model.correctNum} / ${model.questionNum}',
-                              style: TextStyle(
-                                fontSize: 20.sp,
-                                color: textColor,
+                          onTap: () {
+                            model.ansIndex = 0;
+                            ansCheck(model.choise[0], context, model);
+                          },
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(0, 0, 0, 10.w),
+                      child: Center(
+                        child: SizedBox(
+                          width: 250.w,
+                          child: TextField(
+                            maxLines: 1,
+                            cursorColor: textColor,
+                            decoration: InputDecoration(
+                              contentPadding: EdgeInsets.only(
+                                left: 20.w,
+                              ),
+                              border: const OutlineInputBorder(),
+                              hintText: 'SAMPLE',
+                            ),
+                            style: TextStyle(
+                              fontSize: 25.sp,
+                              fontWeight: FontWeight.w800,
+                              color: textColor,
+                              fontFamily:
+                                  textStyleList[model.choise[1]].fontFamily,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.all(8.h),
+                      child: SizedBox(
+                        height: 40.h,
+                        width: 40.w,
+                        child: GestureDetector(
+                          child: DecoratedBox(
+                            decoration: BoxDecoration(
+                              color: changeColor(1, model),
+                            ),
+                            child: Center(
+                              child: Text(
+                                '1',
+                                style: TextStyle(
+                                  fontSize: 30.sp,
+                                  color: textColor,
+                                ),
                               ),
                             ),
                           ),
-                        ],
+                          onTap: () {
+                            model.ansIndex = 1;
+                            ansCheck(model.choise[1], context, model);
+                          },
+                        ),
                       ),
-                      Padding(
-                        padding: EdgeInsets.all(12.h),
-                        child: Text(
-                          '${fontFamilyToDisplayName[textStyleList[model.correct].fontFamily]}',
-                          style: TextStyle(
-                            fontSize: 30.sp,
-                            color: textColor,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(0, 0, 0, 10.w),
+                      child: Center(
+                        child: SizedBox(
+                          width: 250.w,
+                          child: TextField(
+                            maxLines: 1,
+                            cursorColor: textColor,
+                            decoration: InputDecoration(
+                              contentPadding: EdgeInsets.only(
+                                left: 20.w,
+                              ),
+                              border: const OutlineInputBorder(),
+                              hintText: 'SAMPLE',
+                            ),
+                            style: TextStyle(
+                              fontSize: 25.sp,
+                              fontWeight: FontWeight.w800,
+                              color: textColor,
+                              fontFamily:
+                                  textStyleList[model.choise[0]].fontFamily,
+                            ),
                           ),
                         ),
                       ),
-                    ],
-                  ),
-                  Center(
-                    child: Visibility(
-                      visible: model.circle,
-                      child: SizedBox(
-                        height: 200.h,
-                        width: 200.w,
-                        child: Image.asset('assets/true.jpeg'),
-                      ),
                     ),
-                  ),
-                  Center(
-                    child: Visibility(
-                      visible: model.cross,
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.all(8.h),
                       child: SizedBox(
-                        height: 200.h,
-                        width: 200.w,
-                        child: Image.asset('assets/false.jpeg'),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.all(8.h),
-                    child: SizedBox(
-                      height: 40.h,
-                      width: 40.w,
-                      child: GestureDetector(
-                        child: DecoratedBox(
-                          decoration: BoxDecoration(
-                            color: changeColor(0, model),
-                          ),
-                          child: Center(
-                            child: Text(
-                              '0',
-                              style: TextStyle(
-                                fontSize: 30.sp,
-                                color: textColor,
+                        height: 40.h,
+                        width: 40.w,
+                        child: GestureDetector(
+                          child: DecoratedBox(
+                            decoration: BoxDecoration(
+                              color: changeColor(2, model),
+                            ),
+                            child: Center(
+                              child: Text(
+                                '2',
+                                style: TextStyle(
+                                  fontSize: 30.sp,
+                                  color: textColor,
+                                ),
                               ),
                             ),
                           ),
+                          onTap: () {
+                            model.ansIndex = 2;
+                            ansCheck(model.choise[2], context, model);
+                          },
                         ),
-                        onTap: () {
-                          model.ansIndex = 0;
-                          ansCheck(model.choise[0], context, model);
-                        },
                       ),
                     ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(0, 0, 0, 10.w),
-                    child: Center(
-                      child: SizedBox(
-                        width: 250.w,
-                        child: TextField(
-                          maxLines: 1,
-                          cursorColor: textColor,
-                          decoration: InputDecoration(
-                            contentPadding: EdgeInsets.only(
-                              left: 20.w,
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(0, 0, 0, 10.w),
+                      child: Center(
+                        child: SizedBox(
+                          width: 250.w,
+                          child: TextField(
+                            maxLines: 1,
+                            cursorColor: textColor,
+                            decoration: InputDecoration(
+                              contentPadding: EdgeInsets.only(
+                                left: 20.w,
+                              ),
+                              border: const OutlineInputBorder(),
+                              hintText: 'SAMPLE',
                             ),
-                            border: const OutlineInputBorder(),
-                            hintText: 'SAMPLE',
-                          ),
-                          style: TextStyle(
-                            fontSize: 25.sp,
-                            fontWeight: FontWeight.w800,
-                            color: textColor,
-                            fontFamily:
-                                textStyleList[model.choise[1]].fontFamily,
+                            style: TextStyle(
+                              fontSize: 25.sp,
+                              fontWeight: FontWeight.w800,
+                              color: textColor,
+                              fontFamily:
+                                  textStyleList[model.choise[2]].fontFamily,
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.all(8.h),
-                    child: SizedBox(
-                      height: 40.h,
-                      width: 40.w,
-                      child: GestureDetector(
-                        child: DecoratedBox(
-                          decoration: BoxDecoration(
-                            color: changeColor(1, model),
-                          ),
-                          child: Center(
-                            child: Text(
-                              '1',
-                              style: TextStyle(
-                                fontSize: 30.sp,
-                                color: textColor,
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.all(8.h),
+                      child: SizedBox(
+                        height: 40.h,
+                        width: 40.w,
+                        child: GestureDetector(
+                          child: DecoratedBox(
+                            decoration: BoxDecoration(
+                              color: changeColor(3, model),
+                            ),
+                            child: Center(
+                              child: Text(
+                                '3',
+                                style: TextStyle(
+                                  fontSize: 30.sp,
+                                  color: textColor,
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                        onTap: () {
-                          model.ansIndex = 1;
-                          ansCheck(model.choise[1], context, model);
-                        },
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(0, 0, 0, 10.w),
-                    child: Center(
-                      child: SizedBox(
-                        width: 250.w,
-                        child: TextField(
-                          maxLines: 1,
-                          cursorColor: textColor,
-                          decoration: InputDecoration(
-                            contentPadding: EdgeInsets.only(
-                              left: 20.w,
-                            ),
-                            border: const OutlineInputBorder(),
-                            hintText: 'SAMPLE',
-                          ),
-                          style: TextStyle(
-                            fontSize: 25.sp,
-                            fontWeight: FontWeight.w800,
-                            color: textColor,
-                            fontFamily:
-                                textStyleList[model.choise[0]].fontFamily,
-                          ),
+                          onTap: () {
+                            model.ansIndex = 3;
+                            ansCheck(model.choise[3], context, model);
+                          },
                         ),
                       ),
                     ),
-                  ),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.all(8.h),
-                    child: SizedBox(
-                      height: 40.h,
-                      width: 40.w,
-                      child: GestureDetector(
-                        child: DecoratedBox(
-                          decoration: BoxDecoration(
-                            color: changeColor(2, model),
-                          ),
-                          child: Center(
-                            child: Text(
-                              '2',
-                              style: TextStyle(
-                                fontSize: 30.sp,
-                                color: textColor,
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(0, 0, 0, 10.w),
+                      child: Center(
+                        child: SizedBox(
+                          width: 250.w,
+                          child: TextField(
+                            maxLines: 1,
+                            cursorColor: textColor,
+                            decoration: InputDecoration(
+                              contentPadding: EdgeInsets.only(
+                                left: 20.w,
                               ),
+                              border: const OutlineInputBorder(),
+                              hintText: 'SAMPLE',
                             ),
-                          ),
-                        ),
-                        onTap: () {
-                          model.ansIndex = 2;
-                          ansCheck(model.choise[2], context, model);
-                        },
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(0, 0, 0, 10.w),
-                    child: Center(
-                      child: SizedBox(
-                        width: 250.w,
-                        child: TextField(
-                          maxLines: 1,
-                          cursorColor: textColor,
-                          decoration: InputDecoration(
-                            contentPadding: EdgeInsets.only(
-                              left: 20.w,
+                            style: TextStyle(
+                              fontSize: 25.sp,
+                              fontWeight: FontWeight.w800,
+                              color: textColor,
+                              fontFamily:
+                                  textStyleList[model.choise[3]].fontFamily,
                             ),
-                            border: const OutlineInputBorder(),
-                            hintText: 'SAMPLE',
-                          ),
-                          style: TextStyle(
-                            fontSize: 25.sp,
-                            fontWeight: FontWeight.w800,
-                            color: textColor,
-                            fontFamily:
-                                textStyleList[model.choise[2]].fontFamily,
                           ),
                         ),
                       ),
                     ),
-                  ),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.all(8.h),
-                    child: SizedBox(
-                      height: 40.h,
-                      width: 40.w,
-                      child: GestureDetector(
-                        child: DecoratedBox(
-                          decoration: BoxDecoration(
-                            color: changeColor(3, model),
-                          ),
-                          child: Center(
-                            child: Text(
-                              '3',
-                              style: TextStyle(
-                                fontSize: 30.sp,
-                                color: textColor,
-                              ),
-                            ),
-                          ),
-                        ),
-                        onTap: () {
-                          model.ansIndex = 3;
-                          ansCheck(model.choise[3], context, model);
-                        },
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(0, 0, 0, 10.w),
-                    child: Center(
-                      child: SizedBox(
-                        width: 250.w,
-                        child: TextField(
-                          maxLines: 1,
-                          cursorColor: textColor,
-                          decoration: InputDecoration(
-                            contentPadding: EdgeInsets.only(
-                              left: 20.w,
-                            ),
-                            border: const OutlineInputBorder(),
-                            hintText: 'SAMPLE',
-                          ),
-                          style: TextStyle(
-                            fontSize: 25.sp,
-                            fontWeight: FontWeight.w800,
-                            color: textColor,
-                            fontFamily:
-                                textStyleList[model.choise[3]].fontFamily,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              OK(context, model),
-            ],
-          );
-        },
+                  ],
+                ),
+                OK(context, model),
+              ],
+            );
+          },
+        ),
       ),
     );
   }
