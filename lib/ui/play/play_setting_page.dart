@@ -150,27 +150,20 @@ class SettingPage extends StatelessWidget {
                     case 0:
                       context.read<SettingViewModel>().difficulty = 'Easy';
                       break;
-
                     case 1:
                       context.read<SettingViewModel>().difficulty = 'Normal';
                       break;
-
                     case 2:
                       context.read<SettingViewModel>().difficulty = 'Hard';
                       break;
-
                     default:
                       break;
                   }
                   if (context.read<SettingViewModel>().mode == true) {
-                    // Navigator.of(context).pushNamed(
-                    //   '/reverse',
-                    // );
+                    context.read<SettingViewModel>().reflesh();
                     context.go('/reverse');
                   } else {
-                    // Navigator.of(context).pushNamed(
-                    //   '/play',
-                    // );
+                    context.read<SettingViewModel>().reflesh();
                     context.go('/play');
                   }
                 },
