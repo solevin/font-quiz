@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_quiz/configs.dart';
+import 'package:font_quiz/ui/play/play_page.dart';
 import 'package:font_quiz/ui/play/play_setting_view.dart';
-import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 class ReversePage extends StatelessWidget {
@@ -16,50 +16,79 @@ class ReversePage extends StatelessWidget {
           return Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Padding(
-                padding: EdgeInsets.all(12.h),
-                child: Text(
-                  '難易度 : ${model.difficulty}',
-                  style: TextStyle(
-                    fontSize: 30.sp,
-                    color: textColor,
-                  ),
-                ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+              Stack(
                 children: [
-                  Padding(
-                    padding: EdgeInsets.all(12.h),
-                    child: Text(
-                      '第${model.no}問',
-                      style: TextStyle(
-                        fontSize: 30.sp,
-                        color: textColor,
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.all(12.h),
+                        child: Text(
+                          '難易度 : ${model.difficulty}',
+                          style: TextStyle(
+                            fontSize: 30.sp,
+                            color: textColor,
+                          ),
+                        ),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.all(12.h),
+                            child: Text(
+                              '第${model.no}問',
+                              style: TextStyle(
+                                fontSize: 30.sp,
+                                color: textColor,
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.all(12.h),
+                            child: Text(
+                              '${model.correctNum} / ${model.questionNum}',
+                              style: TextStyle(
+                                fontSize: 20.sp,
+                                color: textColor,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(12.h),
+                        child: Text(
+                          '${fontFamilyToDisplayName[textStyleList[model.correct].fontFamily]}',
+                          style: TextStyle(
+                            fontSize: 30.sp,
+                            color: textColor,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Center(
+                    child: Visibility(
+                      visible: model.circle,
+                      child: SizedBox(
+                        height: 200.h,
+                        width: 200.w,
+                        child: Image.asset('assets/true.jpeg'),
                       ),
                     ),
                   ),
-                  Padding(
-                    padding: EdgeInsets.all(12.h),
-                    child: Text(
-                      '${model.correctNum} / ${model.questionNum}',
-                      style: TextStyle(
-                        fontSize: 20.sp,
-                        color: textColor,
+                  Center(
+                    child: Visibility(
+                      visible: model.cross,
+                      child: SizedBox(
+                        height: 200.h,
+                        width: 200.w,
+                        child: Image.asset('assets/false.jpeg'),
                       ),
                     ),
                   ),
                 ],
-              ),
-              Padding(
-                padding: EdgeInsets.all(12.h),
-                child: Text(
-                  '${fontFamilyToDisplayName[textStyleList[model.choise[1]].fontFamily]}',
-                  style: TextStyle(
-                    fontSize: 30.sp,
-                    color: textColor,
-                  ),
-                ),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -71,7 +100,9 @@ class ReversePage extends StatelessWidget {
                       width: 40.w,
                       child: GestureDetector(
                         child: DecoratedBox(
-                          decoration: BoxDecoration(color: Colors.orange),
+                          decoration: BoxDecoration(
+                            color: changeColor(0, model),
+                          ),
                           child: Center(
                             child: Text(
                               '0',
@@ -83,6 +114,7 @@ class ReversePage extends StatelessWidget {
                           ),
                         ),
                         onTap: () {
+                          model.ansIndex = 0;
                           ansCheck(model.choise[0], context, model);
                         },
                       ),
@@ -126,7 +158,9 @@ class ReversePage extends StatelessWidget {
                       width: 40.w,
                       child: GestureDetector(
                         child: DecoratedBox(
-                          decoration: BoxDecoration(color: Colors.orange),
+                          decoration: BoxDecoration(
+                            color: changeColor(1, model),
+                          ),
                           child: Center(
                             child: Text(
                               '1',
@@ -138,6 +172,7 @@ class ReversePage extends StatelessWidget {
                           ),
                         ),
                         onTap: () {
+                          model.ansIndex = 1;
                           ansCheck(model.choise[1], context, model);
                         },
                       ),
@@ -181,7 +216,9 @@ class ReversePage extends StatelessWidget {
                       width: 40.w,
                       child: GestureDetector(
                         child: DecoratedBox(
-                          decoration: BoxDecoration(color: Colors.orange),
+                          decoration: BoxDecoration(
+                            color: changeColor(2, model),
+                          ),
                           child: Center(
                             child: Text(
                               '2',
@@ -193,6 +230,7 @@ class ReversePage extends StatelessWidget {
                           ),
                         ),
                         onTap: () {
+                          model.ansIndex = 2;
                           ansCheck(model.choise[2], context, model);
                         },
                       ),
@@ -236,7 +274,9 @@ class ReversePage extends StatelessWidget {
                       width: 40.w,
                       child: GestureDetector(
                         child: DecoratedBox(
-                          decoration: BoxDecoration(color: Colors.orange),
+                          decoration: BoxDecoration(
+                            color: changeColor(3, model),
+                          ),
                           child: Center(
                             child: Text(
                               '3',
@@ -248,6 +288,7 @@ class ReversePage extends StatelessWidget {
                           ),
                         ),
                         onTap: () {
+                          model.ansIndex = 3;
                           ansCheck(model.choise[3], context, model);
                         },
                       ),
@@ -281,26 +322,11 @@ class ReversePage extends StatelessWidget {
                   ),
                 ],
               ),
+              OK(context, model),
             ],
           );
         },
       ),
     );
   }
-}
-
-void ansCheck(int ans, BuildContext context, SettingViewModel model) {
-  if (ans == model.correct) {
-    print('true');
-    model.correctNum++;
-  } else {
-    print('false');
-  }
-  model.no++;
-  if (model.no > model.questionNum) {
-    // Navigator.pushNamedAndRemoveUntil(context, '/result', (route) => false);
-    // Navigator.pushNamed(context, '/result');
-    context.go('/result');
-  }
-  model.reflesh();
 }

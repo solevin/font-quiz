@@ -8,9 +8,12 @@ class SettingViewModel with ChangeNotifier {
   int correctNum = 0;
   int no = 1;
   int correct = 0;
+  int ansIndex = 0;
+  int correctIndex = 0;
   bool mode = false;
   bool circle = false;
   bool cross = false;
+  bool check = false;
   List<int> choise = [];
 
   void init() {
@@ -25,6 +28,7 @@ class SettingViewModel with ChangeNotifier {
     createQuiz();
     circle = false;
     cross = false;
+    check = false;
     notify();
   }
 
@@ -44,6 +48,7 @@ class SettingViewModel with ChangeNotifier {
       choise[i] = choise[n];
       choise[n] = temp;
     }
+    correctIndex = choise.indexOf(correct);
   }
 
   void notify() => notifyListeners();
