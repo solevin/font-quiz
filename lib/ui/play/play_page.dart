@@ -96,7 +96,9 @@ class PlayPage extends StatelessWidget {
                       width: 300.w,
                       child: GestureDetector(
                         child: DecoratedBox(
-                          decoration: BoxDecoration(color: Colors.orange),
+                          decoration: BoxDecoration(
+                            color: changeColor(0, model),
+                          ),
                           child: Center(
                             child: Text(
                               '${fontFamilyToDisplayName[textStyleList[model.choise[0]].fontFamily]}',
@@ -108,6 +110,7 @@ class PlayPage extends StatelessWidget {
                           ),
                         ),
                         onTap: () {
+                          model.ansIndex = 0;
                           ansCheck(model.choise[0], context, model);
                         },
                       ),
@@ -120,7 +123,9 @@ class PlayPage extends StatelessWidget {
                       width: 300.w,
                       child: GestureDetector(
                         child: DecoratedBox(
-                          decoration: BoxDecoration(color: Colors.orange),
+                          decoration: BoxDecoration(
+                            color: changeColor(1, model),
+                          ),
                           child: Center(
                             child: Text(
                               '${fontFamilyToDisplayName[textStyleList[model.choise[1]].fontFamily]}',
@@ -132,6 +137,7 @@ class PlayPage extends StatelessWidget {
                           ),
                         ),
                         onTap: () {
+                          model.ansIndex = 1;
                           ansCheck(model.choise[1], context, model);
                         },
                       ),
@@ -144,7 +150,9 @@ class PlayPage extends StatelessWidget {
                       width: 300.w,
                       child: GestureDetector(
                         child: DecoratedBox(
-                          decoration: BoxDecoration(color: Colors.orange),
+                          decoration: BoxDecoration(
+                            color: changeColor(2, model),
+                          ),
                           child: Center(
                             child: Text(
                               '${fontFamilyToDisplayName[textStyleList[model.choise[2]].fontFamily]}',
@@ -156,6 +164,7 @@ class PlayPage extends StatelessWidget {
                           ),
                         ),
                         onTap: () {
+                          model.ansIndex = 2;
                           ansCheck(model.choise[2], context, model);
                         },
                       ),
@@ -168,7 +177,9 @@ class PlayPage extends StatelessWidget {
                       width: 300.w,
                       child: GestureDetector(
                         child: DecoratedBox(
-                          decoration: BoxDecoration(color: Colors.orange),
+                          decoration: BoxDecoration(
+                            color: changeColor(3, model),
+                          ),
                           child: Center(
                             child: Text(
                               '${fontFamilyToDisplayName[textStyleList[model.choise[3]].fontFamily]}',
@@ -180,6 +191,7 @@ class PlayPage extends StatelessWidget {
                           ),
                         ),
                         onTap: () {
+                          model.ansIndex = 3;
                           ansCheck(model.choise[3], context, model);
                         },
                       ),
@@ -289,6 +301,26 @@ void ansCheck(int ans, BuildContext context, SettingViewModel model) {
     } else {
       model.cross = true;
     }
-    model.notify();
+    model
+      ..check = true
+      ..notify();
+  }
+}
+
+Color changeColor(int index, SettingViewModel model) {
+  if (model.check == true) {
+    if (index == model.ansIndex) {
+      if (model.ansIndex == model.correctIndex) {
+        return Colors.yellow;
+      } else {
+        return Colors.blue;
+      }
+    } else if (index == model.correctIndex) {
+      return Colors.red;
+    } else {
+      return Colors.orange;
+    }
+  } else {
+    return Colors.orange;
   }
 }
