@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_quiz/router.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:font_quiz/ui/highscore/highscore_page_view.dart';
 import 'package:font_quiz/ui/play/play_setting_view.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:provider/provider.dart' as provider;
 
 void main() {
@@ -12,6 +13,9 @@ void main() {
         providers: [
           provider.ChangeNotifierProvider(
             create: (_) => SettingViewModel(),
+          ),
+          provider.ChangeNotifierProvider(
+            create: (_) => HighscoreViewModel(),
           ),
         ],
         child: ScreenUtilInit(

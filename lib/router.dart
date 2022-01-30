@@ -1,3 +1,4 @@
+import 'package:font_quiz/ui/highscore/highscore_page.dart';
 import 'package:font_quiz/ui/home/home_page.dart';
 import 'package:font_quiz/ui/play/play_page.dart';
 import 'package:font_quiz/ui/play/play_page_reverse.dart';
@@ -42,6 +43,11 @@ GoRouter router = GoRouter(
       name: 'setting',
       path: '/setting',
       builder: (context, state) => const HomePage(),
+    ),
+    GoRoute(
+      name: 'hiScore',
+      path: '/highScore',
+      builder: (context, state) => const HighscorePage(),
     ),
   ]
 );
