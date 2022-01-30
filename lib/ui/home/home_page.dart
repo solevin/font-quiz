@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_quiz/ui/common/app_title_bar.dart';
+import 'package:font_quiz/ui/highscore/highscore_page_view.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    context.read<HighscoreViewModel>().init();
     return Scaffold(
       appBar: AppTitleBar(),
       body: Center(
@@ -25,6 +28,10 @@ class HomePage extends StatelessWidget {
             MenuItem(
               text: 'Setting',
               route: '/',
+            ),
+            MenuItem(
+              text: 'HighScore',
+              route: '/highScore',
             ),
           ],
         ),
