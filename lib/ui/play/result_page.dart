@@ -10,6 +10,11 @@ class ResultPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const textColor = Color(0xFF5C4444);
+    final modeText =
+        context.read<SettingViewModel>().endless ? 'エンドレスモード' : 'トレーニングモード';
+    final result = context.read<SettingViewModel>().endless
+        ? '${context.read<SettingViewModel>().correctNum}'
+        : '${context.read<SettingViewModel>().correctNum} / ${context.read<SettingViewModel>().questionNum}';
     return Scaffold(
       appBar: AppBar(
         title: const Text('RESULT'),
@@ -18,6 +23,16 @@ class ResultPage extends StatelessWidget {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          Padding(
+            padding: EdgeInsets.all(12.h),
+            child: Text(
+              modeText,
+              style: TextStyle(
+                fontSize: 30.sp,
+                color: textColor,
+              ),
+            ),
+          ),
           Padding(
             padding: EdgeInsets.all(12.h),
             child: Text(
@@ -32,7 +47,7 @@ class ResultPage extends StatelessWidget {
             padding: EdgeInsets.all(8.h),
             child: Center(
               child: Text(
-                '正解数 : ${context.read<SettingViewModel>().correctNum} / ${context.read<SettingViewModel>().questionNum}',
+                '正解数 : $result',
                 style: TextStyle(
                   fontSize: 20.sp,
                   fontWeight: FontWeight.w700,

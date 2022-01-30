@@ -10,6 +10,7 @@ class SettingViewModel with ChangeNotifier {
   int correct = 0;
   int ansIndex = 0;
   int correctIndex = 0;
+  int errorNum = 0;
   bool reverse = false;
   bool endless = false;
   bool circle = false;
@@ -21,6 +22,7 @@ class SettingViewModel with ChangeNotifier {
     difficulty = '';
     questionNum = 5;
     correctNum = 0;
+    errorNum = 0;
     no = 1;
     reflesh();
   }

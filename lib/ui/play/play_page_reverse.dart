@@ -63,7 +63,7 @@ class ReversePage extends StatelessWidget {
                               child: Text(
                                 '${model.correctNum} / ${model.questionNum}',
                                 style: TextStyle(
-                                  fontSize: 20.sp,
+                                  fontSize: 30.sp,
                                   color: textColor,
                                 ),
                               ),
@@ -336,7 +336,7 @@ class ReversePage extends StatelessWidget {
                     ),
                   ],
                 ),
-                OK(context, model),
+                nextQuestion(context, model),
               ],
             );
           },

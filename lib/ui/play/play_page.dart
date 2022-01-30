@@ -13,9 +13,6 @@ class PlayPage extends StatelessWidget {
     const textColor = Color(0xFF5C4444);
     final modeText =
         context.read<SettingViewModel>().endless ? 'エンドレスモード' : 'トレーニングモード';
-    final denominator = context.read<SettingViewModel>().endless
-        ? 3
-        : context.read<SettingViewModel>().questionNum;
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
@@ -65,9 +62,9 @@ class PlayPage extends StatelessWidget {
                             Padding(
                               padding: EdgeInsets.all(12.h),
                               child: Text(
-                                '${model.correctNum} / $denominator',
+                                exitConditon(model),
                                 style: TextStyle(
-                                  fontSize: 20.sp,
+                                  fontSize: 30.sp,
                                   color: textColor,
                                 ),
                               ),
@@ -242,7 +239,7 @@ class PlayPage extends StatelessWidget {
                     ),
                   ),
                 ),
-                OK(context, model),
+                nextQuestion(context, model),
               ],
             );
           },
@@ -256,8 +253,10 @@ void ansCheck(int ans, BuildContext context, SettingViewModel model) {
   if (model.circle == false && model.cross == false) {
     if (ans == model.correct) {
       model.circle = true;
+      model.correctNum++;
     } else {
       model.cross = true;
+      model.errorNum++;
     }
     model
       ..check = true
@@ -283,7 +282,7 @@ Color changeColor(int index, SettingViewModel model) {
   }
 }
 
-Widget OK(BuildContext context, SettingViewModel model) {
+Widget nextQuestion(BuildContext context, SettingViewModel model) {
   const textColor = Color(0xFF5C4444);
   if (model.check == true) {
     return Padding(
@@ -305,8 +304,14 @@ Widget OK(BuildContext context, SettingViewModel model) {
             ),
           ),
           onTap: () {
-            if (model.no >= model.questionNum) {
-              context.go('/result');
+            if (model.endless == true) {
+              if (model.errorNum >= 3) {
+                context.go('/result');
+              }
+            } else {
+              if (model.no >= model.questionNum) {
+                context.go('/result');
+              }
             }
             model.no++;
             model.reflesh();
@@ -322,5 +327,13 @@ Widget OK(BuildContext context, SettingViewModel model) {
         width: 200.w,
       ),
     );
+  }
+}
+
+String exitConditon(SettingViewModel model) {
+  if (model.endless == true) {
+    return 'x' * model.errorNum + ' ' * (2 - model.errorNum);
+  } else {
+    return '${model.correctNum} / ${model.questionNum}';
   }
 }
