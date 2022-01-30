@@ -11,6 +11,11 @@ class PlayPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const textColor = Color(0xFF5C4444);
+    final modeText =
+        context.read<SettingViewModel>().endless ? 'エンドレスモード' : 'トレーニングモード';
+    final denominator = context.read<SettingViewModel>().endless
+        ? 3
+        : context.read<SettingViewModel>().questionNum;
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
@@ -24,6 +29,16 @@ class PlayPage extends StatelessWidget {
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
+                        Padding(
+                          padding: EdgeInsets.all(12.h),
+                          child: Text(
+                            modeText,
+                            style: TextStyle(
+                              fontSize: 30.sp,
+                              color: textColor,
+                            ),
+                          ),
+                        ),
                         Padding(
                           padding: EdgeInsets.all(12.h),
                           child: Text(
@@ -50,7 +65,7 @@ class PlayPage extends StatelessWidget {
                             Padding(
                               padding: EdgeInsets.all(12.h),
                               child: Text(
-                                '${model.correctNum} / ${model.questionNum}',
+                                '${model.correctNum} / $denominator',
                                 style: TextStyle(
                                   fontSize: 20.sp,
                                   color: textColor,

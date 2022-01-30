@@ -18,12 +18,32 @@ class SettingPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('SETTING'),
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Consumer<SettingViewModel>(
-            builder: (context, model, _) {
-              return SizedBox(
+      body: Consumer<SettingViewModel>(
+        builder: (context, model, _) {
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(
+                width: 280.w,
+                height: 35.h,
+                child: SwitchListTile(
+                  title: Text(
+                    'エンドレスモード',
+                    style: TextStyle(
+                      fontSize: 20.sp,
+                      fontWeight: FontWeight.w700,
+                      color: textColor,
+                    ),
+                  ),
+                  value: model.endless,
+                  onChanged: (bool value) {
+                    model
+                      ..endless = value
+                      ..notify();
+                  },
+                ),
+              ),
+              SizedBox(
                 width: 280.w,
                 height: 35.h,
                 child: SwitchListTile(
@@ -35,73 +55,29 @@ class SettingPage extends StatelessWidget {
                       color: textColor,
                     ),
                   ),
-                  value: model.mode,
+                  value: model.reverse,
                   onChanged: (bool value) {
                     model
-                      ..mode = value
+                      ..reverse = value
                       ..notify();
                   },
                 ),
-              );
-            },
-          ),
-          Padding(
-            padding: EdgeInsets.all(8.h),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  '問題数 : ',
-                  style: TextStyle(
-                    fontSize: 20.sp,
-                    fontWeight: FontWeight.w700,
-                    color: textColor,
-                  ),
-                ),
-                Consumer<SettingViewModel>(
-                  builder: (context, model, _) {
-                    return Align(
-                      alignment: Alignment.centerLeft,
-                      child: SizedBox(
-                        width: 100.w,
-                        height: 35.h,
-                        child: DropdownButton(
-                          items: _nums,
-                          value: model.questionNum,
-                          style: TextStyle(
-                            fontSize: 20.sp,
-                            fontWeight: FontWeight.w700,
-                            color: textColor,
-                          ),
-                          dropdownColor: backColor,
-                          onChanged: (value) => {
-                            model.questionNum = value! as int,
-                            model.notify(),
-                          },
-                        ),
+              ),
+              questionNum(model,_nums),
+              Padding(
+                padding: EdgeInsets.all(8.h),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      '難易度 : ',
+                      style: TextStyle(
+                        fontSize: 20.sp,
+                        fontWeight: FontWeight.w700,
+                        color: textColor,
                       ),
-                    );
-                  },
-                ),
-              ],
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.all(8.h),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  '難易度 : ',
-                  style: TextStyle(
-                    fontSize: 20.sp,
-                    fontWeight: FontWeight.w700,
-                    color: textColor,
-                  ),
-                ),
-                Consumer<SettingViewModel>(
-                  builder: (context, model, _) {
-                    return Align(
+                    ),
+                    Align(
                       alignment: Alignment.centerLeft,
                       child: SizedBox(
                         width: 100.w,
@@ -121,56 +97,56 @@ class SettingPage extends StatelessWidget {
                           },
                         ),
                       ),
-                    );
-                  },
+                    ),
+                  ],
                 ),
-              ],
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.all(8.h),
-            child: SizedBox(
-              height: 40.h,
-              width: 100.w,
-              child: GestureDetector(
-                child: DecoratedBox(
-                  decoration: BoxDecoration(color: Colors.orange),
-                  child: Center(
-                    child: Text(
-                      'OK',
-                      style: TextStyle(
-                        fontSize: 30.sp,
-                        color: textColor,
+              ),
+              Padding(
+                padding: EdgeInsets.all(8.h),
+                child: SizedBox(
+                  height: 40.h,
+                  width: 100.w,
+                  child: GestureDetector(
+                    child: DecoratedBox(
+                      decoration: BoxDecoration(color: Colors.orange),
+                      child: Center(
+                        child: Text(
+                          'OK',
+                          style: TextStyle(
+                            fontSize: 30.sp,
+                            color: textColor,
+                          ),
+                        ),
                       ),
                     ),
+                    onTap: () {
+                      switch (tmpDiff) {
+                        case 0:
+                          model.difficulty = 'Easy';
+                          break;
+                        case 1:
+                          model.difficulty = 'Normal';
+                          break;
+                        case 2:
+                          model.difficulty = 'Hard';
+                          break;
+                        default:
+                          break;
+                      }
+                      if (model.reverse == true) {
+                        model.reflesh();
+                        context.go('/reverse');
+                      } else {
+                        model.reflesh();
+                        context.go('/play');
+                      }
+                    },
                   ),
                 ),
-                onTap: () {
-                  switch (tmpDiff) {
-                    case 0:
-                      context.read<SettingViewModel>().difficulty = 'Easy';
-                      break;
-                    case 1:
-                      context.read<SettingViewModel>().difficulty = 'Normal';
-                      break;
-                    case 2:
-                      context.read<SettingViewModel>().difficulty = 'Hard';
-                      break;
-                    default:
-                      break;
-                  }
-                  if (context.read<SettingViewModel>().mode == true) {
-                    context.read<SettingViewModel>().reflesh();
-                    context.go('/reverse');
-                  } else {
-                    context.read<SettingViewModel>().reflesh();
-                    context.go('/play');
-                  }
-                },
               ),
-            ),
-          ),
-        ],
+            ],
+          );
+        },
       ),
     );
   }
@@ -246,4 +222,55 @@ List<List<DropdownMenuItem<int>>> setItems() {
       ),
     );
   return [_nums, _difficulty];
+}
+
+Widget questionNum(SettingViewModel model, List<DropdownMenuItem<int>> _nums) {
+  const textColor = Color(0xFF5C4444);
+  const backColor = Color(0xFFFFFBE5);
+  if (model.endless) {
+    return Padding(
+      padding: EdgeInsets.all(8.h),
+      child: SizedBox(
+        height: 35.h,
+      ),
+    );
+  } else {
+    return Padding(
+      padding: EdgeInsets.all(8.h),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            '問題数 : ',
+            style: TextStyle(
+              fontSize: 20.sp,
+              fontWeight: FontWeight.w700,
+              color: textColor,
+            ),
+          ),
+          Align(
+            alignment: Alignment.centerLeft,
+            child: SizedBox(
+              width: 100.w,
+              height: 35.h,
+              child: DropdownButton(
+                items: _nums,
+                value: model.questionNum,
+                style: TextStyle(
+                  fontSize: 20.sp,
+                  fontWeight: FontWeight.w700,
+                  color: textColor,
+                ),
+                dropdownColor: backColor,
+                onChanged: (value) => {
+                  model.questionNum = value! as int,
+                  model.notify(),
+                },
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 }

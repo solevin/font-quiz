@@ -10,7 +10,8 @@ class SettingViewModel with ChangeNotifier {
   int correct = 0;
   int ansIndex = 0;
   int correctIndex = 0;
-  bool mode = false;
+  bool reverse = false;
+  bool endless = false;
   bool circle = false;
   bool cross = false;
   bool check = false;
