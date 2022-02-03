@@ -9,7 +9,7 @@ class HiScoreDao {
 
   Future<List<HiScore>> findAll() async {
     final db = await _dbProvider.database;
-    final result = await db.query(_tbName);
+    final result = await db!.query(_tbName);
     final scores = List.generate(result.length, (i) {
       return HiScore.fromMap(result[i]);
     });
@@ -18,20 +18,20 @@ class HiScoreDao {
 
   Future<List<List<HiScore>>> pickUpAll() async {
     final pickedList = <List<HiScore>>[];
-    var tmpList = await pickUp('Easy');
-    pickedList.add(tmpList);
-    tmpList = await pickUp('Normal');
-    pickedList.add(tmpList);
-    tmpList = await pickUp('Hard');
-    pickedList.add(tmpList);
+    final easyList = await pickUp('Easy');
+    pickedList.add(easyList);
+    final normalList = await pickUp('Normal');
+    pickedList.add(normalList);
+    final hardList = await pickUp('Hard');
+    pickedList.add(hardList);
     return pickedList;
   }
 
   Future<List<HiScore>> pickUp(String difficulty) async {
     final db = await _dbProvider.database;
-    final result = await db.rawQuery(
-        'SELECT * FROM $_tbName WHERE difficulty = ? ORDER BY score desc',
-        [difficulty]);
+    final result = await db!.rawQuery(
+      "SELECT * FROM $_tbName WHERE difficulty = '$difficulty' ORDER BY score desc",
+    );
     final picks = List.generate(result.length, (i) {
       return HiScore.fromMap(result[i]);
     });
@@ -40,14 +40,14 @@ class HiScoreDao {
 
   Future<int> create(HiScore hiScore) async {
     final db = await _dbProvider.database;
-    final result = await db.insert(_tbName, hiScore.toMapExceptId());
+    final result = await db!.insert(_tbName, hiScore.toMapExceptId());
     return result;
   }
 
   // update
   Future<int> update(int id, HiScore hiScore) async {
     final db = await _dbProvider.database;
-    final result = await db.update(
+    final result = await db!.update(
       _tbName,
       hiScore.toMapExceptId(),
       where: 'id=?',
@@ -59,14 +59,14 @@ class HiScoreDao {
   // delete
   Future<void> deleteAll() async {
     final db = await _dbProvider.database;
-    await db.delete(
+    await db!.delete(
       _tbName,
     );
   }
 
   Future<void> deleteElement(int id) async {
     final db = await _dbProvider.database;
-    await db.delete(_tbName, where: 'id=?', whereArgs: [id]);
+    await db!.delete(_tbName, where: 'id=?', whereArgs: [id]);
   }
 
   Future<void> deleteDB() async {

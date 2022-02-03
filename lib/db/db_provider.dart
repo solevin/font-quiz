@@ -1,3 +1,5 @@
+import 'package:font_quiz/db/highscore.dart';
+import 'package:font_quiz/db/highscore_dao.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -10,16 +12,34 @@ class DBProvider {
   static const int _databaseVersion = 1;
   static const String tableName = 'highScore';
 
-  static const bool initMode = true;
+  static const bool initMode = false;
 
-  late Database _database;
+  Database? _database;
 
-  Future<Database> get database async {
-    if (!initMode) {
+  Future<Database?> get database async {
+    if (_database != null && !initMode) {
+      // final path = join(await getDatabasesPath(), _databaseName);
+      // return _database = await openDatabase(
+      //   path,
+      //   version: _databaseVersion,
+      // );
       return _database;
     } else {
-      return _database = await initDB();
-      // return _database;
+      final difficultyList = ['Easy', 'Normal', 'Hard'];
+      final hiScoreDao = HiScoreDao();
+
+      _database = await initDB();
+
+      for (var i = 0; i < 3; i++) {
+        final hiScore = HiScore(
+          difficulty: difficultyList[i],
+          score: 0,
+          date: '**-**-**',
+        );
+        await hiScoreDao.create(hiScore);
+      }
+
+      return _database;
     }
   }
 
@@ -30,13 +50,24 @@ class DBProvider {
       await deleteDatabase(path);
     }
 
-    return openDatabase(
+    final data = await openDatabase(
       path,
       version: _databaseVersion,
-      onCreate: (Database database, int version) async {
-        await _createTable(database, version);
+      onCreate: (db, version) {
+        // await _createTable(db, version);
+        return db.execute('''
+      CREATE TABLE $tableName
+      (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        difficulty TEXT NOT NULL,
+        score INTEGER NOT NULL,
+        date TEXT NOT NULL
+      )
+    ''');
       },
     );
+
+    return data;
   }
 
   Future<void> _createTable(Database database, int version) async {

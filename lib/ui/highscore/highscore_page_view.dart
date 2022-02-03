@@ -25,7 +25,7 @@ class HighscoreViewModel with ChangeNotifier {
     result += rankList[difficulty];
     if (rankList[difficulty].length < 5) {
       for (var i = 0; i < 5 - rankList[difficulty].length; i++) {
-        final blank = HiScore(score: 0, date: '**-**-**-**');
+        final blank = HiScore(score: 0, date: '**-**-**');
         result.add(blank);
       }
     }

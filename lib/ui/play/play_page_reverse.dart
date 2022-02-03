@@ -10,6 +10,8 @@ class ReversePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const textColor = Color(0xFF5C4444);
+    final modeText =
+        context.read<SettingViewModel>().endless ? 'エンドレスモード' : 'トレーニングモード';
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
@@ -23,6 +25,16 @@ class ReversePage extends StatelessWidget {
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
+                        Padding(
+                          padding: EdgeInsets.all(12.h),
+                          child: Text(
+                            modeText,
+                            style: TextStyle(
+                              fontSize: 30.sp,
+                              color: textColor,
+                            ),
+                          ),
+                        ),
                         Padding(
                           padding: EdgeInsets.all(12.h),
                           child: Text(
@@ -51,7 +63,7 @@ class ReversePage extends StatelessWidget {
                               child: Text(
                                 '${model.correctNum} / ${model.questionNum}',
                                 style: TextStyle(
-                                  fontSize: 20.sp,
+                                  fontSize: 30.sp,
                                   color: textColor,
                                 ),
                               ),
@@ -324,7 +336,7 @@ class ReversePage extends StatelessWidget {
                     ),
                   ],
                 ),
-                OK(context, model),
+                nextQuestion(context, model),
               ],
             );
           },

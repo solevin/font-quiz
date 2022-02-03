@@ -10,16 +10,19 @@ class SettingViewModel with ChangeNotifier {
   int correct = 0;
   int ansIndex = 0;
   int correctIndex = 0;
-  bool mode = false;
+  int errorNum = 0;
+  bool reverse = false;
+  bool endless = false;
   bool circle = false;
   bool cross = false;
   bool check = false;
   List<int> choise = [];
 
   void init() {
-    difficulty = '';
+    difficulty = 'Normal';
     questionNum = 5;
     correctNum = 0;
+    errorNum = 0;
     no = 1;
     reflesh();
   }

@@ -90,7 +90,7 @@ Widget displayRank(String difficulty, HighscoreViewModel read) {
               ),
             ),
             Text(
-              '${scoreList[0].score} ${scoreList[0].date}',
+              '${scoreList[1].score} ${scoreList[1].date}',
               style: TextStyle(
                 fontSize: 15.sp,
                 fontWeight: FontWeight.w700,
@@ -114,7 +114,7 @@ Widget displayRank(String difficulty, HighscoreViewModel read) {
               ),
             ),
             Text(
-              '${scoreList[0].score} ${scoreList[0].date}',
+              '${scoreList[2].score} ${scoreList[2].date}',
               style: TextStyle(
                 fontSize: 15.sp,
                 fontWeight: FontWeight.w700,
@@ -138,7 +138,7 @@ Widget displayRank(String difficulty, HighscoreViewModel read) {
               ),
             ),
             Text(
-              '${scoreList[0].score} ${scoreList[0].date}',
+              '${scoreList[3].score} ${scoreList[3].date}',
               style: TextStyle(
                 fontSize: 15.sp,
                 fontWeight: FontWeight.w700,
@@ -162,7 +162,7 @@ Widget displayRank(String difficulty, HighscoreViewModel read) {
               ),
             ),
             Text(
-              '${scoreList[0].score} ${scoreList[0].date}',
+              '${scoreList[4].score} ${scoreList[4].date}',
               style: TextStyle(
                 fontSize: 15.sp,
                 fontWeight: FontWeight.w700,
