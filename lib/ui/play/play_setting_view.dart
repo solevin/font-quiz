@@ -19,7 +19,7 @@ class SettingViewModel with ChangeNotifier {
   List<int> choise = [];
 
   void init() {
-    difficulty = '';
+    difficulty = 'Normal';
     questionNum = 5;
     correctNum = 0;
     errorNum = 0;
