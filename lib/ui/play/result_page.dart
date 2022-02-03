@@ -80,10 +80,9 @@ class ResultPage extends StatelessWidget {
                       ),
                     ),
                     onTap: () async{
-                      model.init();
                       if (model.endless == true) {
                         final now = DateTime.now();
-                        final outputFormat = DateFormat('yyyy-MM-dd-Hm');
+                        final outputFormat = DateFormat('yyyy-MM-dd');
                         final date = outputFormat.format(now);
                         final hiScoreDao = HiScoreDao();
                         final hiScore = HiScore(
@@ -93,6 +92,7 @@ class ResultPage extends StatelessWidget {
                         );
                         await hiScoreDao.create(hiScore);
                       }
+                      model.init();
                       context.go('/playSetting');
                     },
                   ),

@@ -34,7 +34,7 @@ class DBProvider {
         final hiScore = HiScore(
           difficulty: difficultyList[i],
           score: 0,
-          date: '**-**-**-**',
+          date: '**-**-**',
         );
         await hiScoreDao.create(hiScore);
       }
