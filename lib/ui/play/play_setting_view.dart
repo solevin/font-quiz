@@ -17,6 +17,7 @@ class SettingViewModel with ChangeNotifier {
   bool cross = false;
   bool check = false;
   List<int> choise = [];
+  List<int> wrongList = [];
 
   void init() {
     difficulty = 'Normal';
@@ -24,6 +25,7 @@ class SettingViewModel with ChangeNotifier {
     correctNum = 0;
     errorNum = 0;
     no = 1;
+    wrongList = [];
     reflesh();
   }
 
