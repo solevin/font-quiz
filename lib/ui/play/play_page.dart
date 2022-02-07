@@ -256,6 +256,7 @@ void ansCheck(int ans, BuildContext context, SettingViewModel model) {
       model.correctNum++;
     } else {
       model.cross = true;
+      model.wrongList.add(ans);
       model.errorNum++;
     }
     model
