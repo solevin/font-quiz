@@ -48,14 +48,21 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return LayoutBuilder(
+builder: (_, BoxConstraints constraints) {
     return MaterialApp.router(
       routeInformationParser: router.routeInformationParser,
       routerDelegate: router.routerDelegate,
       title: 'Fonts Quiz',
+      builder: (context, widget) {
+        ScreenUtil.init(constraints,context:context,designSize:Size(360, 690)
+        );
+        return widget!;
+      },
       theme: ThemeData(
         primarySwatch: materialWhite,
       ),
       darkTheme: ThemeData.dark(),
     );
-  }
+    });}
 }
