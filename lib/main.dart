@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_quiz/router.dart';
+import 'package:font_quiz/ui/common/sound_view.dart';
 import 'package:font_quiz/ui/highscore/highscore_page_view.dart';
 import 'package:font_quiz/ui/play/play_setting_view.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -16,6 +17,9 @@ void main() {
           ),
           provider.ChangeNotifierProvider(
             create: (_) => HighscoreViewModel(),
+          ),
+          provider.ChangeNotifierProvider(
+            create: (_) => SoundViewModel(),
           ),
         ],
         child: ScreenUtilInit(

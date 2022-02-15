@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_quiz/configs.dart';
+import 'package:font_quiz/ui/common/sound_view.dart';
 import 'package:font_quiz/ui/play/play_setting_view.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -253,9 +254,11 @@ void ansCheck(int ans, BuildContext context, SettingViewModel model) {
   if (model.circle == false && model.cross == false) {
     if (ans == model.correct) {
       model.circle = true;
+      context.read<SoundViewModel>().sound('correct');
       model.correctNum++;
     } else {
       model.cross = true;
+      context.read<SoundViewModel>().sound('incorrect');
       model.wrongList.add(ans);
       model.errorNum++;
     }
