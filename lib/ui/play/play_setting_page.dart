@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:font_quiz/ui/common/sound_view.dart';
 import 'package:font_quiz/ui/play/play_setting_view.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -37,6 +38,7 @@ class SettingPage extends StatelessWidget {
                   ),
                   value: model.endless,
                   onChanged: (bool value) {
+                    context.read<SoundViewModel>().sound('switch');
                     model
                       ..endless = value
                       ..notify();
@@ -57,13 +59,14 @@ class SettingPage extends StatelessWidget {
                   ),
                   value: model.reverse,
                   onChanged: (bool value) {
+                    context.read<SoundViewModel>().sound('switch');
                     model
                       ..reverse = value
                       ..notify();
                   },
                 ),
               ),
-              questionNum(model,_nums),
+              questionNum(model, _nums),
               Padding(
                 padding: EdgeInsets.all(8.h),
                 child: Row(

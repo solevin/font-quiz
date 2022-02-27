@@ -7,6 +7,7 @@ import 'package:font_quiz/ui/play/play_page.dart';
 import 'package:font_quiz/ui/play/play_page_reverse.dart';
 import 'package:font_quiz/ui/play/play_setting_page.dart';
 import 'package:font_quiz/ui/play/result_page.dart';
+import 'package:font_quiz/ui/play/review_page.dart';
 import 'package:font_quiz/ui/view/view_page.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sqlite_viewer/sqlite_viewer.dart';
@@ -51,6 +52,11 @@ GoRouter router = GoRouter(
       name: 'result',
       path: '/result',
       builder: (context, state) => const ResultPage(),
+    ),
+    GoRoute(
+      name: 'review',
+      path: '/review',
+      builder: (context, state) => const ReviewPage(),
     ),
     GoRoute(
       name: 'view',

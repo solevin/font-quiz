@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_quiz/router.dart';
+import 'package:font_quiz/ui/common/sound_view.dart';
 import 'package:font_quiz/ui/highscore/highscore_page_view.dart';
 import 'package:font_quiz/ui/play/play_setting_view.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -9,9 +10,21 @@ import 'package:provider/provider.dart' as provider;
 void main() {
   runApp(
     ProviderScope(
-      child: provider.MultiProvider(providers: [
-        provider.ChangeNotifierProvider(
-          create: (_) => SettingViewModel(),
+      child: provider.MultiProvider(
+        providers: [
+          provider.ChangeNotifierProvider(
+            create: (_) => SettingViewModel(),
+          ),
+          provider.ChangeNotifierProvider(
+            create: (_) => HighscoreViewModel(),
+          ),
+          provider.ChangeNotifierProvider(
+            create: (_) => SoundViewModel(),
+          ),
+        ],
+        child: ScreenUtilInit(
+          designSize: const Size(360, 690),
+          builder: MyApp.new,
         ),
         provider.ChangeNotifierProvider(
           create: (_) => HighscoreViewModel(),

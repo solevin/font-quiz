@@ -65,6 +65,30 @@ class ResultPage extends StatelessWidget {
                 padding: EdgeInsets.all(8.h),
                 child: SizedBox(
                   height: 40.h,
+                  width: 170.w,
+                  child: GestureDetector(
+                    child: DecoratedBox(
+                      decoration: BoxDecoration(color: Colors.orange),
+                      child: Center(
+                        child: Text(
+                          'REVIEW',
+                          style: TextStyle(
+                            fontSize: 30.sp,
+                            color: textColor,
+                          ),
+                        ),
+                      ),
+                    ),
+                    onTap: () async{
+                      context.go('/review');
+                    },
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.all(8.h),
+                child: SizedBox(
+                  height: 40.h,
                   width: 100.w,
                   child: GestureDetector(
                     child: DecoratedBox(
