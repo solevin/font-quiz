@@ -296,7 +296,7 @@ Widget nextQuestion(BuildContext context, SettingViewModel model) {
         width: 200.w,
         child: GestureDetector(
           child: DecoratedBox(
-            decoration: BoxDecoration(color: Colors.green),
+            decoration: const BoxDecoration(color: Colors.green),
             child: Center(
               child: Text(
                 'OK',

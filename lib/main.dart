@@ -26,7 +26,10 @@ void main() {
           designSize: const Size(360, 690),
           builder: MyApp.new,
         ),
-      ),
+        provider.ChangeNotifierProvider(
+          create: (_) => HighscoreViewModel(),
+        ),
+      ], child: const MyApp()),
     ),
   );
 }
@@ -53,20 +56,24 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
-builder: (_, BoxConstraints constraints) {
-    return MaterialApp.router(
-      routeInformationParser: router.routeInformationParser,
-      routerDelegate: router.routerDelegate,
-      title: 'Fonts Quiz',
-      builder: (context, widget) {
-        ScreenUtil.init(constraints,context:context,designSize:Size(360, 690)
+      builder: (_, BoxConstraints constraints) {
+        return MaterialApp.router(
+          routeInformationParser: router.routeInformationParser,
+          routerDelegate: router.routerDelegate,
+          title: 'Fonts Quiz',
+          theme: ThemeData(
+            primarySwatch: materialWhite,
+          ),
+          darkTheme: ThemeData.dark(),
+          builder: (context, widget) {
+            ScreenUtil.init(
+              constraints,
+              designSize: const Size(360, 690),
+            );
+            return widget!;
+          },
         );
-        return widget!;
       },
-      theme: ThemeData(
-        primarySwatch: materialWhite,
-      ),
-      darkTheme: ThemeData.dark(),
     );
-    });}
+  }
 }
