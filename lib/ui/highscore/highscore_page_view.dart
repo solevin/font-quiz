@@ -1,6 +1,4 @@
-import 'dart:math' as math;
 import 'package:flutter/material.dart';
-import 'package:font_quiz/configs.dart';
 import 'package:font_quiz/db/highscore.dart';
 import 'package:font_quiz/db/highscore_dao.dart';
 

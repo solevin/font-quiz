@@ -1,11 +1,11 @@
 import 'package:font_quiz/db/db_provider.dart';
 import 'package:font_quiz/db/highscore.dart';
-import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
+import 'package:sqflite/sqflite.dart';
 
 class HiScoreDao {
   final DBProvider _dbProvider = DBProvider();
-  final _tbName = DBProvider.tableName;
+  final _tbName = 'highScore';
 
   Future<List<HiScore>> findAll() async {
     final db = await _dbProvider.database;

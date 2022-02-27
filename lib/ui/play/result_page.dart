@@ -68,7 +68,7 @@ class ResultPage extends StatelessWidget {
                   width: 100.w,
                   child: GestureDetector(
                     child: DecoratedBox(
-                      decoration: BoxDecoration(color: Colors.orange),
+                      decoration: const BoxDecoration(color: Colors.orange),
                       child: Center(
                         child: Text(
                           'OK',

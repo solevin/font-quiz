@@ -9,20 +9,14 @@ import 'package:provider/provider.dart' as provider;
 void main() {
   runApp(
     ProviderScope(
-      child: provider.MultiProvider(
-        providers: [
-          provider.ChangeNotifierProvider(
-            create: (_) => SettingViewModel(),
-          ),
-          provider.ChangeNotifierProvider(
-            create: (_) => HighscoreViewModel(),
-          ),
-        ],
-        child: ScreenUtilInit(
-          designSize: const Size(360, 690),
-          builder: MyApp.new,
+      child: provider.MultiProvider(providers: [
+        provider.ChangeNotifierProvider(
+          create: (_) => SettingViewModel(),
         ),
-      ),
+        provider.ChangeNotifierProvider(
+          create: (_) => HighscoreViewModel(),
+        ),
+      ], child: const MyApp()),
     ),
   );
 }
@@ -48,14 +42,25 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      routeInformationParser: router.routeInformationParser,
-      routerDelegate: router.routerDelegate,
-      title: 'Fonts Quiz',
-      theme: ThemeData(
-        primarySwatch: materialWhite,
-      ),
-      darkTheme: ThemeData.dark(),
+    return LayoutBuilder(
+      builder: (_, BoxConstraints constraints) {
+        return MaterialApp.router(
+          routeInformationParser: router.routeInformationParser,
+          routerDelegate: router.routerDelegate,
+          title: 'Fonts Quiz',
+          theme: ThemeData(
+            primarySwatch: materialWhite,
+          ),
+          darkTheme: ThemeData.dark(),
+          builder: (context, widget) {
+            ScreenUtil.init(
+              constraints,
+              designSize: const Size(360, 690),
+            );
+            return widget!;
+          },
+        );
+      },
     );
   }
 }

@@ -1,22 +1,38 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:font_quiz/configs.dart';
+import 'package:font_quiz/db/font.dart';
+import 'package:font_quiz/db/font_dao.dart';
 import 'package:font_quiz/ui/common/app_title_bar.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 final _viewProvider = ChangeNotifierProvider((ref) => ViewNotifier());
 
 class ViewNotifier with ChangeNotifier {
+
   String _text = longText;
+  final FontDao _fontDao = FontDao();
 
   String get text => _text;
+  Future<List<Font>> get fonts async => _fontDao.findAll();
+
+  Future<void> pushFavorite(int fontId) async {
+    final font = await _fontDao.findById(fontId);
+    final paramMap = font.toMap();
+    paramMap['is_favorite'] = font.isFavorite ? 0 : 1;
+    final updatedFont = Font.fromMap(paramMap);
+    await _fontDao.update(fontId, updatedFont);
+    await _fontDao.findById(fontId);
+    notifyListeners();
+  }
 
   void change(String text) {
     _text = text;
     notifyListeners();
   }
+
 }
 
 class ViewPage extends HookConsumerWidget {
@@ -25,6 +41,7 @@ class ViewPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final scaffoldKey = GlobalKey<ScaffoldState>();
+    final viewState = ref.watch(_viewProvider);
 
     return Scaffold(
       key: scaffoldKey,
@@ -37,27 +54,42 @@ class ViewPage extends HookConsumerWidget {
         child: drawerMenuContent(context, ref),
       ),
       body: AnimationLimiter(
-        child: ListView.builder(
-          itemCount: textStyleList.length,
-          itemBuilder: (BuildContext context, int index) {
-            final fontFamily = textStyleList[index].fontFamily;
-            final displayName = fontFamilyToDisplayName[fontFamily];
-            if (kDebugMode) {
-              print('fontFamily: $fontFamily');
-            }
-            return AnimationConfiguration.staggeredList(
-              position: index,
-              duration: const Duration(milliseconds: 375),
-              child: SlideAnimation(
-                verticalOffset: 50,
-                child: FadeInAnimation(
-                  child: listChild(context, ref,
-                      fontFamily: fontFamily, displayName: displayName),
-                ),
-              ),
-            );
-          },
-        ),
+        child: FutureBuilder(
+            future: viewState.fonts,
+            builder:
+                (BuildContext context, AsyncSnapshot<List<Font>> snapshot) {
+              if (snapshot.hasData) {
+                final fonts = snapshot.data!;
+                return ListView.builder(
+                  itemCount: fonts.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    final font = fonts[index];
+                    final displayName = font.name;
+                    final fontFamily =
+                        GoogleFonts.getFont(displayName).fontFamily;
+                    return AnimationConfiguration.staggeredList(
+                      position: index,
+                      duration: const Duration(milliseconds: 375),
+                      child: SlideAnimation(
+                        verticalOffset: 50,
+                        child: FadeInAnimation(
+                          child: listChild(
+                              context,
+                              ref,
+                              font: font,
+                              fontId: font.id,
+                              fontFamily: fontFamily,
+                              displayName: displayName
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                );
+              } else {
+                return const Text('Now Loading...');
+              }
+            }),
       ),
     );
   }
@@ -165,9 +197,14 @@ class ViewPage extends HookConsumerWidget {
     );
   }
 
-  Widget listChild(BuildContext context, WidgetRef ref,
-      {String? fontFamily, String? displayName}) {
+  Widget listChild(BuildContext context, WidgetRef ref,{
+      required Font font, 
+      required int fontId, 
+      String? fontFamily, 
+      String? displayName
+  }) {
     final viewState = ref.watch(_viewProvider);
+    var isFavorite = false;
 
     return Card(
       margin: EdgeInsets.all(3.r),
@@ -189,6 +226,21 @@ class ViewPage extends HookConsumerWidget {
                 fontSize: 15.sp,
                 fontWeight: FontWeight.bold,
               ),
+            ),
+            TextButton(
+              child: Icon(
+                font.isFavorite ? Icons.favorite : Icons.favorite_border,
+                color: font.isFavorite ? Colors.red : Colors.black38,
+              ),
+              onPressed: () {
+                viewState.pushFavorite(fontId);
+                if (isFavorite != true) {
+                  //ハートが押されたときにfavoriteにtrueを代入している
+                  isFavorite = true;
+                } else {
+                  isFavorite = false;
+                }
+              },
             ),
             Text(
               viewState.text,
