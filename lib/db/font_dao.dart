@@ -22,6 +22,17 @@ class FontDao {
     return font;
   }
 
+  Future<List<int>> findByDifficulty(int difficulty) async {
+    final db = await _dbProvider.database;
+    final result = await db!
+        .query(tableNameFonts, where: 'difficulty=?', whereArgs: [difficulty]);
+    var eachDifficultyList = <int>[];
+    for(var i = 0;i< result.length;i++){
+      eachDifficultyList.add(result[i]['id'] as int);
+    }
+    return eachDifficultyList;
+  }
+
   Future<int> update(int id, Font font) async {
     final db = await _dbProvider.database;
     final result = await db!.update(

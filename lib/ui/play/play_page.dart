@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_quiz/configs.dart';
+import 'package:font_quiz/db/font.dart';
+import 'package:font_quiz/db/font_dao.dart';
 import 'package:font_quiz/ui/common/sound_view.dart';
 import 'package:font_quiz/ui/play/play_setting_view.dart';
 import 'package:go_router/go_router.dart';
@@ -75,7 +77,7 @@ class PlayPage extends StatelessWidget {
                         Padding(
                           padding: EdgeInsets.all(12.h),
                           child: Text(
-                            '${fontFamilyToDisplayName[textStyleList[model.correct].fontFamily]}',
+                            model.choice[model.correctIndex],
                             style: TextStyle(
                               fontSize: 30.sp,
                               color: textColor,
@@ -96,13 +98,20 @@ class PlayPage extends StatelessWidget {
                                   ),
                                   border: const OutlineInputBorder(),
                                   hintText: 'SAMPLE',
+                                  // hintText: displayNameToTextStyle[
+                                  //         model.choice[model.correctIndex]]!
+                                  //     .fontFamily,
+                                  // hintText: textStyleMurecho.fontFamily,
                                 ),
                                 style: TextStyle(
-                                  fontSize: 25.sp,
+                                  fontSize: 20.sp,
                                   fontWeight: FontWeight.w800,
                                   color: textColor,
-                                  fontFamily:
-                                      textStyleList[model.correct].fontFamily,
+                                  fontFamily: displayNameToTextStyle[
+                                          model.choice[model.correctIndex]]!
+                                      .fontFamily,
+                                  // fontFamily: 'SawarabiGothic_regular',
+                                  // fontFamily: textStyleMurecho.fontFamily,
                                 ),
                               ),
                             ),
@@ -144,7 +153,7 @@ class PlayPage extends StatelessWidget {
                         ),
                         child: Center(
                           child: Text(
-                            '${fontFamilyToDisplayName[textStyleList[model.choise[0]].fontFamily]}',
+                            model.choice[0],
                             style: TextStyle(
                               fontSize: 25.sp,
                               color: textColor,
@@ -153,8 +162,10 @@ class PlayPage extends StatelessWidget {
                         ),
                       ),
                       onTap: () {
+                        print(textStyleMurecho.fontFamily);
+                        print(textStyleMurecho.fontFamily == 'Murecho_regular');
                         model.ansIndex = 0;
-                        ansCheck(model.choise[0], context, model);
+                        ansCheck(0, context, model);
                       },
                     ),
                   ),
@@ -171,7 +182,7 @@ class PlayPage extends StatelessWidget {
                         ),
                         child: Center(
                           child: Text(
-                            '${fontFamilyToDisplayName[textStyleList[model.choise[1]].fontFamily]}',
+                            model.choice[1],
                             style: TextStyle(
                               fontSize: 25.sp,
                               color: textColor,
@@ -181,7 +192,7 @@ class PlayPage extends StatelessWidget {
                       ),
                       onTap: () {
                         model.ansIndex = 1;
-                        ansCheck(model.choise[1], context, model);
+                        ansCheck(1, context, model);
                       },
                     ),
                   ),
@@ -198,7 +209,7 @@ class PlayPage extends StatelessWidget {
                         ),
                         child: Center(
                           child: Text(
-                            '${fontFamilyToDisplayName[textStyleList[model.choise[2]].fontFamily]}',
+                            model.choice[2],
                             style: TextStyle(
                               fontSize: 25.sp,
                               color: textColor,
@@ -208,7 +219,7 @@ class PlayPage extends StatelessWidget {
                       ),
                       onTap: () {
                         model.ansIndex = 2;
-                        ansCheck(model.choise[2], context, model);
+                        ansCheck(2, context, model);
                       },
                     ),
                   ),
@@ -225,7 +236,7 @@ class PlayPage extends StatelessWidget {
                         ),
                         child: Center(
                           child: Text(
-                            '${fontFamilyToDisplayName[textStyleList[model.choise[3]].fontFamily]}',
+                            model.choice[3],
                             style: TextStyle(
                               fontSize: 25.sp,
                               color: textColor,
@@ -235,7 +246,7 @@ class PlayPage extends StatelessWidget {
                       ),
                       onTap: () {
                         model.ansIndex = 3;
-                        ansCheck(model.choise[3], context, model);
+                        ansCheck(3, context, model);
                       },
                     ),
                   ),
@@ -252,7 +263,7 @@ class PlayPage extends StatelessWidget {
 
 void ansCheck(int ans, BuildContext context, SettingViewModel model) {
   if (model.circle == false && model.cross == false) {
-    if (ans == model.correct) {
+    if (ans == model.correctIndex) {
       model.circle = true;
       context.read<SoundViewModel>().sound('correct');
       model.correctNum++;
@@ -318,7 +329,7 @@ Widget nextQuestion(BuildContext context, SettingViewModel model) {
               }
             }
             model.no++;
-            model.reflesh();
+            model.refresh();
           },
         ),
       ),
