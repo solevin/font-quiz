@@ -73,7 +73,7 @@ class ReversePage extends StatelessWidget {
                         Padding(
                           padding: EdgeInsets.all(12.h),
                           child: Text(
-                            '${fontFamilyToDisplayName[textStyleList[model.correct].fontFamily]}',
+                            model.choice[model.correctIndex],
                             style: TextStyle(
                               fontSize: 30.sp,
                               color: textColor,
@@ -129,7 +129,7 @@ class ReversePage extends StatelessWidget {
                           ),
                           onTap: () {
                             model.ansIndex = 0;
-                            ansCheck(model.choise[0], context, model);
+                            ansCheck(0, context, model);
                           },
                         ),
                       ),
@@ -147,14 +147,16 @@ class ReversePage extends StatelessWidget {
                                 left: 20.w,
                               ),
                               border: const OutlineInputBorder(),
-                              hintText: 'SAMPLE',
+                              hintText: model.choice[0],
+                              // hintText: 'SAMPLE',
                             ),
                             style: TextStyle(
                               fontSize: 25.sp,
                               fontWeight: FontWeight.w800,
                               color: textColor,
                               fontFamily:
-                                  textStyleList[model.choise[1]].fontFamily,
+                                  displayNameToTextStyle[model.choice[0]]!
+                                      .fontFamily,
                             ),
                           ),
                         ),
@@ -187,7 +189,7 @@ class ReversePage extends StatelessWidget {
                           ),
                           onTap: () {
                             model.ansIndex = 1;
-                            ansCheck(model.choise[1], context, model);
+                            ansCheck(1, context, model);
                           },
                         ),
                       ),
@@ -205,14 +207,16 @@ class ReversePage extends StatelessWidget {
                                 left: 20.w,
                               ),
                               border: const OutlineInputBorder(),
-                              hintText: 'SAMPLE',
+                              // hintText: 'SAMPLE',
+                              hintText: model.choice[1],
                             ),
                             style: TextStyle(
                               fontSize: 25.sp,
                               fontWeight: FontWeight.w800,
                               color: textColor,
                               fontFamily:
-                                  textStyleList[model.choise[0]].fontFamily,
+                                  displayNameToTextStyle[model.choice[1]]!
+                                      .fontFamily,
                             ),
                           ),
                         ),
@@ -245,7 +249,7 @@ class ReversePage extends StatelessWidget {
                           ),
                           onTap: () {
                             model.ansIndex = 2;
-                            ansCheck(model.choise[2], context, model);
+                            ansCheck(2, context, model);
                           },
                         ),
                       ),
@@ -263,14 +267,16 @@ class ReversePage extends StatelessWidget {
                                 left: 20.w,
                               ),
                               border: const OutlineInputBorder(),
-                              hintText: 'SAMPLE',
+                              // hintText: 'SAMPLE',
+                              hintText: model.choice[2],
                             ),
                             style: TextStyle(
                               fontSize: 25.sp,
                               fontWeight: FontWeight.w800,
                               color: textColor,
                               fontFamily:
-                                  textStyleList[model.choise[2]].fontFamily,
+                                  displayNameToTextStyle[model.choice[2]]!
+                                      .fontFamily,
                             ),
                           ),
                         ),
@@ -303,7 +309,7 @@ class ReversePage extends StatelessWidget {
                           ),
                           onTap: () {
                             model.ansIndex = 3;
-                            ansCheck(model.choise[3], context, model);
+                            ansCheck(3, context, model);
                           },
                         ),
                       ),
@@ -321,14 +327,16 @@ class ReversePage extends StatelessWidget {
                                 left: 20.w,
                               ),
                               border: const OutlineInputBorder(),
-                              hintText: 'SAMPLE',
+                              // hintText: 'SAMPLE',
+                              hintText: model.choice[3],
                             ),
                             style: TextStyle(
                               fontSize: 25.sp,
                               fontWeight: FontWeight.w800,
                               color: textColor,
                               fontFamily:
-                                  textStyleList[model.choise[3]].fontFamily,
+                                  displayNameToTextStyle[model.choice[3]]!
+                                      .fontFamily,
                             ),
                           ),
                         ),

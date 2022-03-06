@@ -21,7 +21,6 @@ dependencies:
   go_router: ^3.0.1
   google_fonts: 2.2.0
   hooks_riverpod: ^1.0.3
-  intl: ^0.17.0
   json_annotation: ^4.4.0
   # mocktail: ^0.3.0
   path: ^1.8.0
@@ -49,7 +48,7 @@ flutter:
     - assets/correct.mp3
     - assets/incorrect.mp3
     - assets/switch.mp3
-    
+
 flutter_gen:
   output: lib/gen/
-  lineLength: 80 
+  lineLength: 80

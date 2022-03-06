@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_quiz/settings.dart';
 import 'package:font_quiz/ui/common/app_title_bar.dart';
 import 'package:font_quiz/ui/highscore/highscore_page_view.dart';
+import 'package:font_quiz/ui/play/play_setting_view.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
@@ -45,9 +46,9 @@ class HomePage extends StatelessWidget {
         //   ),
         // ),
       ),
-      floatingActionButton: 
+      floatingActionButton:
         settings.isShowDatabaseViewer
-        ? 
+        ?
           FloatingActionButton(
             onPressed: () {
               context.go('/_db');
@@ -73,6 +74,9 @@ class MenuItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
+        if(text == 'Play'){
+          context.read<SettingViewModel>();
+        }
         context.go(route);
       },
       child: Container(

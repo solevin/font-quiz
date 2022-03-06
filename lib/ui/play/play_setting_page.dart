@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_quiz/ui/common/sound_view.dart';
@@ -122,7 +123,7 @@ class SettingPage extends StatelessWidget {
                         ),
                       ),
                     ),
-                    onTap: () {
+                    onTap: () async {
                       switch (tmpDiff) {
                         case 0:
                           model.difficulty = 'Easy';
@@ -137,10 +138,10 @@ class SettingPage extends StatelessWidget {
                           break;
                       }
                       if (model.reverse == true) {
-                        model.reflesh();
+                        await model.start();
                         context.go('/reverse');
                       } else {
-                        model.reflesh();
+                        await model.start();
                         context.go('/play');
                       }
                     },

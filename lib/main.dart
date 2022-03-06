@@ -26,10 +26,7 @@ void main() {
           designSize: const Size(360, 690),
           builder: MyApp.new,
         ),
-        provider.ChangeNotifierProvider(
-          create: (_) => HighscoreViewModel(),
-        ),
-      ], child: const MyApp()),
+      ),
     ),
   );
 }

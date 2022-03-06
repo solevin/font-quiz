@@ -1,5 +1,9 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
+import 'package:font_quiz/db/font.dart';
+import 'package:font_quiz/db/font_dao.dart';
+import 'package:font_quiz/db/question.dart';
+import 'package:font_quiz/db/question_dao.dart';
 import 'package:font_quiz/configs.dart';
 
 class SettingViewModel with ChangeNotifier {
@@ -7,7 +11,7 @@ class SettingViewModel with ChangeNotifier {
   int questionNum = 5;
   int correctNum = 0;
   int no = 1;
-  int correct = 0;
+  String correct = '';
   int ansIndex = 0;
   int correctIndex = 0;
   int errorNum = 0;
@@ -16,44 +20,81 @@ class SettingViewModel with ChangeNotifier {
   bool circle = false;
   bool cross = false;
   bool check = false;
-  List<int> choise = [];
+  List<String> choice = [];
   List<int> wrongList = [];
+  List<int> ansIdList = [];
+
+  final questionDao = QuestionDao();
+  final fontDao = FontDao();
 
   void init() {
-    difficulty = 'Normal';
+    endless = false;
+    reverse = false;
     questionNum = 5;
+    difficulty = 'Normal';
+  }
+
+  Future<void> start() async {
+    ansIdList.clear();
+    var index = 0;
     correctNum = 0;
     errorNum = 0;
     no = 1;
-    wrongList = [];
-    reflesh();
+    wrongList.clear();
+    ansIdList.clear();
+    switch (difficulty) {
+      case 'Easy':
+        index = 1;
+        break;
+      case 'Normal':
+        index = 2;
+        break;
+      case 'Hard':
+        index = 3;
+        break;
+    }
+    final futureAnsIdList = await fontDao.findByDifficulty(index);
+    ansIdList.addAll(futureAnsIdList);
+    await refresh();
   }
 
-  void reflesh() {
-    createQuiz();
+  Future<void> refresh() async{
+    await createQuiz();
     circle = false;
     cross = false;
     check = false;
     notify();
   }
 
-  void createQuiz() {
-    final tmp = <int>{};
-    choise = [];
+  Future<void> createQuiz() async {
+    choice.clear();
     final rand = math.Random();
-    correct = rand.nextInt(textStyleList.length);
-    tmp.add(correct);
-    while (tmp.length < 4) {
-      tmp.add(rand.nextInt(textStyleList.length));
+    var questionList = <Question>[];
+    final correctId = ansIdList[rand.nextInt(ansIdList.length)];
+    questionList = await questionDao.findByAnswerId(correctId);
+    var futureFont = await fontDao.findById(correctId);
+    correct = futureFont.name;
+    // choice = List.generate(questionList.length, (i) {
+    //   return questionList[i].toMap()['selection_id'] as int;
+    // });
+    for (var i = 0; i < questionList.length; i++) {
+      futureFont = await fontDao.findById(questionList[i].selectionId);
+      choice.add(futureFont.name);
     }
-    choise = tmp.toList();
-    for (var i = 3; i > 0; i--) {
+    for (var i = choice.length - 1; i > 0; i--) {
       final n = rand.nextInt(i + 1);
-      final temp = choise[i];
-      choise[i] = choise[n];
-      choise[n] = temp;
+      final temp = choice[i];
+      choice[i] = choice[n];
+      choice[n] = temp;
     }
-    correctIndex = choise.indexOf(correct);
+    if (choice.length > 4) {
+      final tmp = [choice[0],choice[1],choice[2],choice[3]];
+      choice = tmp;
+    }
+    correctIndex = choice.indexOf(correct);
+    if(correctIndex < 0){
+      await createQuiz();
+    }
   }
 
   void notify() => notifyListeners();
