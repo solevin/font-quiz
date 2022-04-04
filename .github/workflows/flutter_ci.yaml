@@ -16,12 +16,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: 'Setup repository'
+        uses: actions/checkout@v2
+        
       - name: 'Setup java environment'
         uses: actions/setup-java@v1
         with:
           java-version: '12.x'
-      - name: 'ls'
-        run: ls
 
       - name: 'Setup flutter environment'
         uses: subosito/flutter-action@v2
