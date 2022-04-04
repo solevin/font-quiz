@@ -6,4 +6,10 @@ void main() {
       assert(false);
     }, throwsA(isA<AssertionError>()));
   });
+
+    test('Test!!', () {
+    expect(() {
+      assert(false);
+    }, throwsA(isA<AssertionError>()));
+  });
 }
