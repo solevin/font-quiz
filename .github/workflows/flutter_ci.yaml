@@ -20,6 +20,8 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: '12.x'
+      - name: 'ls'
+        run: ls
 
       - name: 'Setup flutter environment'
         uses: subosito/flutter-action@v2
@@ -40,8 +42,10 @@ jobs:
           key: build-pubspec-${{ hashFiles('**/pubspec.lock') }}
           restore-keys: |
             build-pubspec-
+            
       - name: 'Run lint'
         run: flutter analyze
+        
       # - run: flutter pub get
       - name: 'Run test'
         run: flutter test
