@@ -4,7 +4,7 @@ class Font {
     required this.id,
     required this.name,
     required this.difficulty,
-    required this.isFavorite
+    required this.isFavorite,
   });
 
   Font.fromMap(Map<String, dynamic> paramMap)
