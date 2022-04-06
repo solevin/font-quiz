@@ -16,6 +16,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: 'Setup repository'
+        uses: actions/checkout@v2
+        
       - name: 'Setup java environment'
         uses: actions/setup-java@v1
         with:
@@ -40,8 +43,10 @@ jobs:
           key: build-pubspec-${{ hashFiles('**/pubspec.lock') }}
           restore-keys: |
             build-pubspec-
+            
       - name: 'Run lint'
         run: flutter analyze
+        
       # - run: flutter pub get
       - name: 'Run test'
         run: flutter test
