@@ -6,8 +6,6 @@
 name: Flutter CI
 
 on:
-  push:
-    branches: [ develop ]
   pull_request:
     branches: [ develop ]
 
@@ -47,6 +45,5 @@ jobs:
       - name: 'Run lint'
         run: flutter analyze
         
-      # - run: flutter pub get
       - name: 'Run test'
         run: flutter test
