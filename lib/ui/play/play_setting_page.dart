@@ -10,8 +10,8 @@ class SettingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final itemList = setItems();
-    final _nums = itemList[0];
-    final _difficulty = itemList[1];
+    final tmpNums = itemList[0];
+    final tmpDifficulty = itemList[1];
     var tmpDiff = 1;
     const textColor = Color(0xFF5C4444);
     const backColor = Color(0xFFFFFBE5);
@@ -66,7 +66,7 @@ class SettingPage extends StatelessWidget {
                   },
                 ),
               ),
-              questionNum(model, _nums),
+              questionNum(model, tmpNums),
               Padding(
                 padding: EdgeInsets.all(8.h),
                 child: Row(
@@ -86,7 +86,7 @@ class SettingPage extends StatelessWidget {
                         width: 100.w,
                         height: 35.h,
                         child: DropdownButton(
-                          items: _difficulty,
+                          items: tmpDifficulty,
                           value: tmpDiff,
                           style: TextStyle(
                             fontSize: 20.sp,
@@ -156,10 +156,10 @@ class SettingPage extends StatelessWidget {
 }
 
 List<List<DropdownMenuItem<int>>> setItems() {
-  final _nums = <DropdownMenuItem<int>>[];
-  final _difficulty = <DropdownMenuItem<int>>[];
+  final tmpNums = <DropdownMenuItem<int>>[];
+  final tmpDifficulty = <DropdownMenuItem<int>>[];
 
-  _nums
+  tmpNums
     ..add(
       DropdownMenuItem(
         value: 5,
@@ -196,7 +196,7 @@ List<List<DropdownMenuItem<int>>> setItems() {
         ),
       ),
     );
-  _difficulty
+  tmpDifficulty
     ..add(
       DropdownMenuItem(
         value: 0,
@@ -224,10 +224,10 @@ List<List<DropdownMenuItem<int>>> setItems() {
         ),
       ),
     );
-  return [_nums, _difficulty];
+  return [tmpNums, tmpDifficulty];
 }
 
-Widget questionNum(SettingViewModel model, List<DropdownMenuItem<int>> _nums) {
+Widget questionNum(SettingViewModel model, List<DropdownMenuItem<int>> tmpNums) {
   const textColor = Color(0xFF5C4444);
   const backColor = Color(0xFFFFFBE5);
   if (model.endless) {
@@ -257,7 +257,7 @@ Widget questionNum(SettingViewModel model, List<DropdownMenuItem<int>> _nums) {
               width: 100.w,
               height: 35.h,
               child: DropdownButton(
-                items: _nums,
+                items: tmpNums,
                 value: model.questionNum,
                 style: TextStyle(
                   fontSize: 20.sp,
