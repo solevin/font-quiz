@@ -46,16 +46,13 @@ class HomePage extends StatelessWidget {
         //   ),
         // ),
       ),
-      floatingActionButton:
-        settings.isShowDatabaseViewer
-        ?
-          FloatingActionButton(
-            onPressed: () {
-              context.go('/_db');
-            },
-          )
-        :
-          null,
+      floatingActionButton: settings.isShowDatabaseViewer
+          ? FloatingActionButton(
+              onPressed: () {
+                context.go('/_db');
+              },
+            )
+          : null,
     );
   }
 }
@@ -74,7 +71,7 @@ class MenuItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        if(text == 'Play'){
+        if (text == 'Play') {
           context.read<SettingViewModel>();
         }
         context.go(route);
@@ -95,7 +92,7 @@ class MenuItem extends StatelessWidget {
             ),
           ),
         ),
-      )
+      ),
     );
   }
 }

@@ -11,7 +11,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 final _viewProvider = ChangeNotifierProvider((ref) => ViewNotifier());
 
 class ViewNotifier with ChangeNotifier {
-
   String _text = longText;
   final FontDao _fontDao = FontDao();
 
@@ -32,7 +31,6 @@ class ViewNotifier with ChangeNotifier {
     _text = text;
     notifyListeners();
   }
-
 }
 
 class ViewPage extends HookConsumerWidget {
@@ -55,41 +53,41 @@ class ViewPage extends HookConsumerWidget {
       ),
       body: AnimationLimiter(
         child: FutureBuilder(
-            future: viewState.fonts,
-            builder:
-                (BuildContext context, AsyncSnapshot<List<Font>> snapshot) {
-              if (snapshot.hasData) {
-                final fonts = snapshot.data!;
-                return ListView.builder(
-                  itemCount: fonts.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    final font = fonts[index];
-                    final displayName = font.name;
-                    final fontFamily =
-                        GoogleFonts.getFont(displayName).fontFamily;
-                    return AnimationConfiguration.staggeredList(
-                      position: index,
-                      duration: const Duration(milliseconds: 375),
-                      child: SlideAnimation(
-                        verticalOffset: 50,
-                        child: FadeInAnimation(
-                          child: listChild(
-                              context,
-                              ref,
-                              font: font,
-                              fontId: font.id,
-                              fontFamily: fontFamily,
-                              displayName: displayName
-                          ),
+          future: viewState.fonts,
+          builder: (BuildContext context, AsyncSnapshot<List<Font>> snapshot) {
+            if (snapshot.hasData) {
+              final fonts = snapshot.data!;
+              return ListView.builder(
+                itemCount: fonts.length,
+                itemBuilder: (BuildContext context, int index) {
+                  final font = fonts[index];
+                  final displayName = font.name;
+                  final fontFamily =
+                      GoogleFonts.getFont(displayName).fontFamily;
+                  return AnimationConfiguration.staggeredList(
+                    position: index,
+                    duration: const Duration(milliseconds: 375),
+                    child: SlideAnimation(
+                      verticalOffset: 50,
+                      child: FadeInAnimation(
+                        child: listChild(
+                          context,
+                          ref,
+                          font: font,
+                          fontId: font.id,
+                          fontFamily: fontFamily,
+                          displayName: displayName,
                         ),
                       ),
-                    );
-                  },
-                );
-              } else {
-                return const Text('Now Loading...');
-              }
-            }),
+                    ),
+                  );
+                },
+              );
+            } else {
+              return const Text('Now Loading...');
+            }
+          },
+        ),
       ),
     );
   }
@@ -172,8 +170,11 @@ class ViewPage extends HookConsumerWidget {
     );
   }
 
-  Widget drawerMenuContentButton(String text,
-      {Color? color, void Function()? onTap}) {
+  Widget drawerMenuContentButton(
+    String text, {
+    Color? color,
+    void Function()? onTap,
+  }) {
     return InkWell(
       onTap: onTap,
       child: Container(
@@ -197,11 +198,13 @@ class ViewPage extends HookConsumerWidget {
     );
   }
 
-  Widget listChild(BuildContext context, WidgetRef ref,{
-      required Font font, 
-      required int fontId, 
-      String? fontFamily, 
-      String? displayName
+  Widget listChild(
+    BuildContext context,
+    WidgetRef ref, {
+    required Font font,
+    required int fontId,
+    String? fontFamily,
+    String? displayName,
   }) {
     final viewState = ref.watch(_viewProvider);
     var isFavorite = false;

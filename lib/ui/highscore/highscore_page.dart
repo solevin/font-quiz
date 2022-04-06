@@ -9,17 +9,18 @@ class HighscorePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final read = context.read<HighscoreViewModel>();
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('HighScore'),
-        ),
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            displayRank('Easy', read),
-            displayRank('Normal', read),
-            displayRank('Hard', read),
-          ],
-        ));
+      appBar: AppBar(
+        title: const Text('HighScore'),
+      ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          displayRank('Easy', read),
+          displayRank('Normal', read),
+          displayRank('Hard', read),
+        ],
+      ),
+    );
   }
 }
 

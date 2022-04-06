@@ -29,7 +29,7 @@ GoRouter router = GoRouter(
             } else {
               return const Text('Now Loading...');
             }
-          }
+          },
         );
       },
     ),
@@ -78,5 +78,5 @@ GoRouter router = GoRouter(
       path: '/_db',
       builder: (context, state) => const DatabaseList(),
     ),
-  ]
+  ],
 );
