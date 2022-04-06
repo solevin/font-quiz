@@ -4,9 +4,14 @@ void main() {
   test(
     'Test!',
     () {
-      expect(() {
-        assert(false);
-      }, throwsA(isA<AssertionError>()));
+      expect(
+        () {
+          assert(false);
+        },
+        throwsA(
+          isA<AssertionError>(),
+        ),
+      );
     },
   );
 }

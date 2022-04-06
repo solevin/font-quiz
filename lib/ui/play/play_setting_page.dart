@@ -227,7 +227,10 @@ List<List<DropdownMenuItem<int>>> setItems() {
   return [tmpNums, tmpDifficulty];
 }
 
-Widget questionNum(SettingViewModel model, List<DropdownMenuItem<int>> tmpNums) {
+Widget questionNum(
+  SettingViewModel model,
+  List<DropdownMenuItem<int>> tmpNums,
+) {
   const textColor = Color(0xFF5C4444);
   const backColor = Color(0xFFFFFBE5);
   if (model.endless) {
