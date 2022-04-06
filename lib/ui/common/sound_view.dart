@@ -6,8 +6,8 @@ class SoundViewModel with ChangeNotifier {
 
 
   void sound(String name){
-    final _audio = AudioCache();
-    _audio.play(name + '.mp3');
+    AudioCache()
+      .play('$name.mp3');
   }
 
   void notify() => notifyListeners();

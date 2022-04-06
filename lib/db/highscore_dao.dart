@@ -30,7 +30,9 @@ class HiScoreDao {
   Future<List<HiScore>> pickUp(String difficulty) async {
     final db = await _dbProvider.database;
     final result = await db!.rawQuery(
-      "SELECT * FROM $_tbName WHERE difficulty = '$difficulty' ORDER BY score desc",
+      'SELECT * FROM $_tbName '
+      "WHERE difficulty = '$difficulty' "
+      'ORDER BY score desc',
     );
     final picks = List.generate(result.length, (i) {
       return HiScore.fromMap(result[i]);

@@ -26,9 +26,9 @@ class FontDao {
     final db = await _dbProvider.database;
     final result = await db!
         .query(tableNameFonts, where: 'difficulty=?', whereArgs: [difficulty]);
-    var eachDifficultyList = <int>[];
+    final eachDifficultyList = <int>[];
     for(var i = 0;i< result.length;i++){
-      eachDifficultyList.add(result[i]['id'] as int);
+      eachDifficultyList.add(result[i]['id']! as int);
     }
     return eachDifficultyList;
   }

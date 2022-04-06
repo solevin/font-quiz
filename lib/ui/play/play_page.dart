@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_quiz/configs.dart';
-import 'package:font_quiz/db/font.dart';
-import 'package:font_quiz/db/font_dao.dart';
 import 'package:font_quiz/ui/common/sound_view.dart';
 import 'package:font_quiz/ui/play/play_setting_view.dart';
 import 'package:go_router/go_router.dart';
@@ -162,8 +160,6 @@ class PlayPage extends StatelessWidget {
                         ),
                       ),
                       onTap: () {
-                        print(textStyleMurecho.fontFamily);
-                        print(textStyleMurecho.fontFamily == 'Murecho_regular');
                         model.ansIndex = 0;
                         ansCheck(0, context, model);
                       },

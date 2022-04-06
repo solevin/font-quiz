@@ -1,10 +1,8 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
-import 'package:font_quiz/db/font.dart';
 import 'package:font_quiz/db/font_dao.dart';
 import 'package:font_quiz/db/question.dart';
 import 'package:font_quiz/db/question_dao.dart';
-import 'package:font_quiz/configs.dart';
 
 class SettingViewModel with ChangeNotifier {
   String difficulty = '';
