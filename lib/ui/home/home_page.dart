@@ -8,7 +8,7 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 // Pull Request Test
-class HomePage extends StatelessWidget {
+class HomePage extends StatelessWidget!! {
   const HomePage({Key? key, required this.settings}) : super(key: key);
 
   final Settings settings;
