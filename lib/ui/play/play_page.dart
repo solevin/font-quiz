@@ -89,7 +89,6 @@ class PlayPage extends StatelessWidget {
                             child: SizedBox(
                               width: 335.w,
                               child: TextField(
-                                maxLines: 1,
                                 cursorColor: textColor,
                                 decoration: InputDecoration(
                                   contentPadding: EdgeInsets.only(

@@ -131,9 +131,7 @@ class ViewPage extends HookConsumerWidget {
                 style: TextStyle(fontSize: 15.sp),
                 decoration: InputDecoration(
                   enabledBorder: const OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Colors.black,
-                    ),
+                    
                   ),
                   focusedBorder: const OutlineInputBorder(
                     borderSide: BorderSide(
@@ -183,7 +181,7 @@ class ViewPage extends HookConsumerWidget {
         padding: EdgeInsets.all(5.r),
         decoration: BoxDecoration(
           color: color,
-          border: Border.all(color: Colors.black),
+          border: Border.all(),
           borderRadius: BorderRadius.circular(50.r),
         ),
         child: Center(
@@ -214,7 +212,6 @@ class ViewPage extends HookConsumerWidget {
       shape: RoundedRectangleBorder(
         borderRadius: const BorderRadius.all(Radius.circular(10)),
         side: BorderSide(
-          color: Colors.black,
           width: 1.r,
         ),
       ),

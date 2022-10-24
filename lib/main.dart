@@ -22,7 +22,9 @@ void main() {
             create: (_) => SoundViewModel(),
           ),
         ],
-        child: MyApp(),
+        child: ScreenUtilInit(
+          builder: MyApp.new,
+        ),
       ),
     ),
   );
@@ -64,10 +66,9 @@ class MyApp extends StatelessWidget {
           ),
           darkTheme: ThemeData.dark(),
           builder: (context, widget) {
-            // ScreenUtil.init(
-            //   constraints,
-            //   designSize: const Size(360, 690),
-            // );
+            ScreenUtil.init(
+              constraints,
+            );
             return widget!;
           },
         );
