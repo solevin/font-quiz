@@ -16,7 +16,7 @@ jobs:
     steps:
       - name: 'Setup repository'
         uses: actions/checkout@v2
-        
+
       - name: 'Setup java environment'
         uses: actions/setup-java@v1
         with:
@@ -25,7 +25,7 @@ jobs:
       - name: 'Setup flutter environment'
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '2.10.3'
+          flutter-version: '3.0.1'
           channel: 'stable'
           cache: true
 
@@ -41,9 +41,9 @@ jobs:
           key: build-pubspec-${{ hashFiles('**/pubspec.lock') }}
           restore-keys: |
             build-pubspec-
-            
+
       - name: 'Run lint'
         run: flutter analyze
-        
+
       - name: 'Run test'
         run: flutter test
