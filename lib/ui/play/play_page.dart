@@ -1,10 +1,11 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_quiz/configs.dart';
-import 'package:font_quiz/ui/common/sound_view.dart';
 import 'package:font_quiz/ui/play/play_setting_view.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+
 
 class PlayPage extends StatelessWidget {
   const PlayPage({Key? key}) : super(key: key);
@@ -260,11 +261,13 @@ void ansCheck(int ans, BuildContext context, SettingViewModel model) {
   if (model.circle == false && model.cross == false) {
     if (ans == model.correctIndex) {
       model.circle = true;
-      context.read<SoundViewModel>().sound('correct');
+      AudioPlayer().play('assets/sound/correct.mp3');
+      // context.read<SoundViewModel>().sound('correct');
       model.correctNum++;
     } else {
       model.cross = true;
-      context.read<SoundViewModel>().sound('incorrect');
+      AudioPlayer().play('sound/incorrect.mp3');
+      // context.read<SoundViewModel>().sound('incorrect');
       model.wrongList.add(ans);
       model.errorNum++;
     }
@@ -307,7 +310,7 @@ Widget nextQuestion(BuildContext context, SettingViewModel model) {
               child: Text(
                 'OK',
                 style: TextStyle(
-                  fontSize: 30.sp,
+                  fontSize: 20.sp,
                   color: textColor,
                 ),
               ),

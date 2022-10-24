@@ -88,7 +88,7 @@ class ReversePage extends StatelessWidget {
                         child: SizedBox(
                           height: 200.h,
                           width: 200.w,
-                          child: Image.asset('assets/true.jpeg'),
+                          child: Image.asset('assets/images/image_true.jpeg'),
                         ),
                       ),
                     ),
@@ -98,7 +98,7 @@ class ReversePage extends StatelessWidget {
                         child: SizedBox(
                           height: 200.h,
                           width: 200.w,
-                          child: Image.asset('assets/false.jpeg'),
+                          child: Image.asset('assets/images/image_false.jpeg'),
                         ),
                       ),
                     ),

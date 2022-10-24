@@ -16,7 +16,7 @@ jobs:
     steps:
       - name: 'Setup repository'
         uses: actions/checkout@v2
-        
+
       - name: 'Setup java environment'
         uses: actions/setup-java@v1
         with:
@@ -41,9 +41,9 @@ jobs:
           key: build-pubspec-${{ hashFiles('**/pubspec.lock') }}
           restore-keys: |
             build-pubspec-
-            
+
       - name: 'Run lint'
         run: flutter analyze
-        
+
       - name: 'Run test'
         run: flutter test

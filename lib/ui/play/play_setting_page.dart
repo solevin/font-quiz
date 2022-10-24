@@ -138,9 +138,11 @@ class SettingPage extends StatelessWidget {
                       }
                       if (model.reverse == true) {
                         await model.start();
+                        // ignore: use_build_context_synchronously
                         context.go('/reverse');
                       } else {
                         await model.start();
+                        // ignore: use_build_context_synchronously
                         context.go('/play');
                       }
                     },
