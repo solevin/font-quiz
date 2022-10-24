@@ -140,7 +140,6 @@ class ReversePage extends StatelessWidget {
                         child: SizedBox(
                           width: 250.w,
                           child: TextField(
-                            maxLines: 1,
                             cursorColor: textColor,
                             decoration: InputDecoration(
                               contentPadding: EdgeInsets.only(
@@ -200,7 +199,6 @@ class ReversePage extends StatelessWidget {
                         child: SizedBox(
                           width: 250.w,
                           child: TextField(
-                            maxLines: 1,
                             cursorColor: textColor,
                             decoration: InputDecoration(
                               contentPadding: EdgeInsets.only(
@@ -260,7 +258,6 @@ class ReversePage extends StatelessWidget {
                         child: SizedBox(
                           width: 250.w,
                           child: TextField(
-                            maxLines: 1,
                             cursorColor: textColor,
                             decoration: InputDecoration(
                               contentPadding: EdgeInsets.only(
@@ -320,7 +317,6 @@ class ReversePage extends StatelessWidget {
                         child: SizedBox(
                           width: 250.w,
                           child: TextField(
-                            maxLines: 1,
                             cursorColor: textColor,
                             decoration: InputDecoration(
                               contentPadding: EdgeInsets.only(
