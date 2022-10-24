@@ -22,10 +22,7 @@ void main() {
             create: (_) => SoundViewModel(),
           ),
         ],
-        child: ScreenUtilInit(
-          designSize: const Size(360, 690),
-          builder: MyApp.new,
-        ),
+        child: MyApp(),
       ),
     ),
   );
@@ -52,9 +49,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (_, BoxConstraints constraints) {
+    return ScreenUtilInit(
+      designSize: const Size(360, 690),
+      // child: LayoutBuilder(
+      // builder: (_, BoxConstraints constraints) {
+      builder: (context, child) {
         return MaterialApp.router(
+          routeInformationProvider: router.routeInformationProvider,
           routeInformationParser: router.routeInformationParser,
           routerDelegate: router.routerDelegate,
           title: 'Fonts Quiz',
@@ -63,14 +64,18 @@ class MyApp extends StatelessWidget {
           ),
           darkTheme: ThemeData.dark(),
           builder: (context, widget) {
-            ScreenUtil.init(
-              constraints,
-              designSize: const Size(360, 690),
-            );
+            // ScreenUtil.init(
+            //   constraints,
+            //   designSize: const Size(360, 690),
+            // );
             return widget!;
           },
         );
       },
     );
+
+    // },
+    //   ),
+    // )
   }
 }
