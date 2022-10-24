@@ -46,18 +46,43 @@ const materialWhite = MaterialColor(
   },
 );
 
-class MyApp extends StatelessWidget {
+// class MyApp extends StatelessWidget {
+//   const MyApp({Key? key}) : super(key: key);
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return ScreenUtilInit(
+//       designSize: const Size(360, 690),
+//       child: LayoutBuilder(
+//       builder: (_, BoxConstraints constraints) {
+//       builder: (context, child) {
+//         return MaterialApp.router(
+//           routeInformationProvider: router.routeInformationProvider,
+//           routeInformationParser: router.routeInformationParser,
+//           routerDelegate: router.routerDelegate,
+//           title: 'Fonts Quiz',
+//           theme: ThemeData(
+//             primarySwatch: materialWhite,
+//           ),
+//           darkTheme: ThemeData.dark(),
+//           builder: (context, widget) {
+//             ScreenUtil.init(
+//               constraints,
+//             );
+//             return widget!;
+//           },
+//         );
+//       },
+//     );
+
+    class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return ScreenUtilInit(
-      designSize: const Size(360, 690),
-      // child: LayoutBuilder(
-      // builder: (_, BoxConstraints constraints) {
-      builder: (context, child) {
+    return LayoutBuilder(
+      builder: (_, BoxConstraints constraints) {
         return MaterialApp.router(
-          routeInformationProvider: router.routeInformationProvider,
           routeInformationParser: router.routeInformationParser,
           routerDelegate: router.routerDelegate,
           title: 'Fonts Quiz',
@@ -74,9 +99,13 @@ class MyApp extends StatelessWidget {
         );
       },
     );
+  }
+}
+
+
 
     // },
     //   ),
     // )
-  }
-}
+//   }
+// }

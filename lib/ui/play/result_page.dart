@@ -117,6 +117,7 @@ class ResultPage extends StatelessWidget {
                         await hiScoreDao.create(hiScore);
                       }
                       model.init();
+                      // ignore: use_build_context_synchronously
                       context.go('/playSetting');
                     },
                   ),
