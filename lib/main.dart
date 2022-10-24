@@ -23,7 +23,6 @@ void main() {
           ),
         ],
         child: ScreenUtilInit(
-          designSize: const Size(360, 690),
           builder: MyApp.new,
         ),
       ),
@@ -65,7 +64,6 @@ class MyApp extends StatelessWidget {
           builder: (context, widget) {
             ScreenUtil.init(
               constraints,
-              designSize: const Size(360, 690),
             );
             return widget!;
           },
