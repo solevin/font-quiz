@@ -13,6 +13,7 @@ import 'package:go_router/go_router.dart';
 import 'package:sqlite_viewer/sqlite_viewer.dart';
 
 GoRouter router = GoRouter(
+  initialLocation: '/',
   routes: [
     GoRoute(
       name: 'home',

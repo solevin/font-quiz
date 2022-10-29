@@ -1,3 +1,4 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_quiz/ui/common/sound_view.dart';
@@ -38,7 +39,7 @@ class SettingPage extends StatelessWidget {
                   ),
                   value: model.endless,
                   onChanged: (bool value) {
-                    context.read<SoundViewModel>().sound('switch');
+                    AudioCache().play('sound/switch.mp3');
                     model
                       ..endless = value
                       ..notify();
@@ -59,7 +60,7 @@ class SettingPage extends StatelessWidget {
                   ),
                   value: model.reverse,
                   onChanged: (bool value) {
-                    context.read<SoundViewModel>().sound('switch');
+                    AudioCache().play('sound/switch.mp3');
                     model
                       ..reverse = value
                       ..notify();

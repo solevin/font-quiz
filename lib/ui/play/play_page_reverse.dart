@@ -86,8 +86,7 @@ class ReversePage extends StatelessWidget {
                       child: Visibility(
                         visible: model.circle,
                         child: SizedBox(
-                          height: 200.h,
-                          width: 200.w,
+                          height: 150.h,
                           child: Image.asset('assets/images/image_true.jpeg'),
                         ),
                       ),
@@ -96,8 +95,7 @@ class ReversePage extends StatelessWidget {
                       child: Visibility(
                         visible: model.cross,
                         child: SizedBox(
-                          height: 200.h,
-                          width: 200.w,
+                          height: 150.h,
                           child: Image.asset('assets/images/image_false.jpeg'),
                         ),
                       ),

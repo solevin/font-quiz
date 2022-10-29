@@ -83,6 +83,7 @@ const materialWhite = MaterialColor(
     return LayoutBuilder(
       builder: (_, BoxConstraints constraints) {
         return MaterialApp.router(
+          routeInformationProvider: router.routeInformationProvider,
           routeInformationParser: router.routeInformationParser,
           routerDelegate: router.routerDelegate,
           title: 'Fonts Quiz',
