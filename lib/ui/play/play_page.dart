@@ -267,7 +267,7 @@ void ansCheck(int ans, BuildContext context, SettingViewModel model) {
       model.cross = true;
       AudioCache().play('sound/incorrect.mp3');
       // context.read<SoundViewModel>().sound('incorrect');
-      model.wrongList.add(ans);
+      model.wrongList.add(model.correct);
       model.errorNum++;
     }
     model

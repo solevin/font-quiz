@@ -19,7 +19,7 @@ class SettingViewModel with ChangeNotifier {
   bool cross = false;
   bool check = false;
   List<String> choice = [];
-  List<int> wrongList = [];
+  List<String> wrongList = [];
   List<int> ansIdList = [];
 
   final questionDao = QuestionDao();
