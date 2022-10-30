@@ -122,7 +122,6 @@ class PlayPage extends StatelessWidget {
                         visible: model.circle,
                         child: SizedBox(
                           height: 200.h,
-                          width: 200.w,
                           child: Image.asset('assets/images/image_true.jpeg'),
                         ),
                       ),
@@ -131,8 +130,7 @@ class PlayPage extends StatelessWidget {
                       child: Visibility(
                         visible: model.cross,
                         child: SizedBox(
-                          height: 200.h,
-                          width: 200.w,
+                          height:200.h,
                           child: Image.asset('assets/images/image_false.jpeg'),
                         ),
                       ),
@@ -261,12 +259,13 @@ void ansCheck(int ans, BuildContext context, SettingViewModel model) {
   if (model.circle == false && model.cross == false) {
     if (ans == model.correctIndex) {
       model.circle = true;
-      AudioPlayer().play('assets/sound/correct.mp3');
+      // AudioPlayer().play('assets/sound/correct.mp3');
+      AudioCache().play('sound/correct.mp3');
       // context.read<SoundViewModel>().sound('correct');
       model.correctNum++;
     } else {
       model.cross = true;
-      AudioPlayer().play('sound/incorrect.mp3');
+      AudioCache().play('sound/incorrect.mp3');
       // context.read<SoundViewModel>().sound('incorrect');
       model.wrongList.add(ans);
       model.errorNum++;
