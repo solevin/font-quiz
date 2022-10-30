@@ -4,7 +4,8 @@ import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:font_quiz/configs.dart';
 import 'package:font_quiz/db/font.dart';
 import 'package:font_quiz/db/font_dao.dart';
-import 'package:font_quiz/ui/common/app_title_bar.dart';
+import 'package:go_router/go_router.dart';
+// import 'package:font_quiz/ui/common/app_title_bar.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -43,8 +44,14 @@ class ViewPage extends HookConsumerWidget {
 
     return Scaffold(
       key: scaffoldKey,
-      appBar: AppTitleBar(
-        action: <Widget>[
+      appBar: AppBar(
+        leading: GestureDetector(
+          child: const Icon(Icons.home),
+          onTap: () {
+            context.go('/');
+          },
+        ),
+        actions: <Widget>[
           drawerMenuButton(scaffoldKey),
         ],
       ),
@@ -93,11 +100,13 @@ class ViewPage extends HookConsumerWidget {
   }
 
   Widget drawerMenuButton(GlobalKey<ScaffoldState> scaffoldKey) {
-    return InkWell(
-      onTap: () => scaffoldKey.currentState?.openEndDrawer(),
-      child: Icon(
-        const IconData(0xf1ad, fontFamily: 'MaterialIcons'),
-        size: 15.sp,
+    return Padding(
+      padding: EdgeInsets.all(8.w),
+      child: InkWell(
+        onTap: () => scaffoldKey.currentState?.openEndDrawer(),
+        child: const Icon(
+          IconData(0xf1ad, fontFamily: 'MaterialIcons'),
+        ),
       ),
     );
   }
@@ -130,9 +139,7 @@ class ViewPage extends HookConsumerWidget {
               TextField(
                 style: TextStyle(fontSize: 15.sp),
                 decoration: InputDecoration(
-                  enabledBorder: const OutlineInputBorder(
-                    
-                  ),
+                  enabledBorder: const OutlineInputBorder(),
                   focusedBorder: const OutlineInputBorder(
                     borderSide: BorderSide(
                       color: Colors.red,

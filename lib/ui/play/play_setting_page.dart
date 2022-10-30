@@ -18,6 +18,12 @@ class SettingPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('SETTING'),
+        leading: GestureDetector(
+          child: const Icon(Icons.home),
+          onTap: () {
+            context.go('/');
+          },
+        ),
       ),
       body: Consumer<SettingViewModel>(
         builder: (context, model, _) {

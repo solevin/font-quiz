@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_quiz/ui/highscore/highscore_page_view.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 class HighscorePage extends StatelessWidget {
@@ -11,6 +12,12 @@ class HighscorePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('HighScore'),
+        leading: GestureDetector(
+          child: const Icon(Icons.home),
+          onTap: () {
+            context.go('/');
+          },
+        ),
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
