@@ -20,6 +20,12 @@ class ResultPage extends StatelessWidget {
         : '${context.read<SettingViewModel>().correctNum} / ${context.read<SettingViewModel>().questionNum}';
     return Scaffold(
       appBar: AppBar(
+        leading: GestureDetector(
+          child: const Icon(Icons.home),
+          onTap: () {
+            context.go('/');
+          },
+        ),
         title: const Text('RESULT'),
         automaticallyImplyLeading: false,
       ),
@@ -79,7 +85,7 @@ class ResultPage extends StatelessWidget {
                         ),
                       ),
                     ),
-                    onTap: () async{
+                    onTap: () async {
                       context.go('/review');
                     },
                   ),
@@ -103,7 +109,7 @@ class ResultPage extends StatelessWidget {
                         ),
                       ),
                     ),
-                    onTap: () async{
+                    onTap: () async {
                       if (model.endless == true) {
                         final now = DateTime.now();
                         final outputFormat = DateFormat('yyyy-MM-dd');
