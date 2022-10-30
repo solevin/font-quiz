@@ -57,7 +57,7 @@ class ReviewPage extends StatelessWidget {
   }
 }
 
-List<Widget> makeWidgets(List<int> wrongList) {
+List<Widget> makeWidgets(List<String> wrongList) {
   final contentWidgets = <Widget>[];
   for (var i = 0; i < wrongList.length; i++) {
     contentWidgets.add(bodyContent(wrongList[i]));
@@ -65,7 +65,7 @@ List<Widget> makeWidgets(List<int> wrongList) {
   return contentWidgets;
 }
 
-Widget bodyContent(int font) {
+Widget bodyContent(String font) {
   const textColor = Color(0xFF5C4444);
   return Column(
     mainAxisAlignment: MainAxisAlignment.center,
@@ -73,7 +73,7 @@ Widget bodyContent(int font) {
       Padding(
         padding: EdgeInsets.all(8.h),
         child: Text(
-          '${fontFamilyToDisplayName[textStyleList[font].fontFamily]}',
+          font,
           style: TextStyle(
             fontSize: 30.sp,
             color: textColor,
@@ -98,7 +98,7 @@ Widget bodyContent(int font) {
                 fontSize: 25.sp,
                 fontWeight: FontWeight.w800,
                 color: textColor,
-                fontFamily: textStyleList[font].fontFamily,
+                fontFamily: displayNameToTextStyle[font]!.fontFamily,
               ),
             ),
           ),
