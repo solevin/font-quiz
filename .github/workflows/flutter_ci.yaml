@@ -48,5 +48,8 @@ jobs:
       - name: 'Run test'
         run: flutter test
 
+      - name: 'Run Code Metrics'
+        run: flutter test
+
       # — name: 'Run Code Metrics'
       #   run: flutter pub run dart_code_metrics:metrics analyze lib --reporter=github
