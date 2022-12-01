@@ -46,7 +46,10 @@ jobs:
         run: flutter analyze
 
       - name: 'Run test'
-        run: flutter test
+        run: flutter test --coverage
 
       - name: 'Run Code Metrics'
         run: flutter pub run dart_code_metrics:metrics analyze lib --reporter=github
+
+      - name: 'Upload a coverage report to Codecov'
+        uses: codecov/codecov-action@v3
