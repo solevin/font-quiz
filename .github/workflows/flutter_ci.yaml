@@ -6,8 +6,9 @@
 name: Flutter CI
 
 on:
-  pull_request:
-    branches: [ develop ]
+  # pull_request:
+  #   branches: [ develop ]
+  workflow_dispatch:
 
 jobs:
   build:
