@@ -15,22 +15,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: 'Setup repository'
+      - name: Setup repository
         uses: actions/checkout@v2
 
-      - name: 'Setup java environment'
-        uses: actions/setup-java@v1
-        with:
-          java-version: '12.x'
-
-      - name: 'Setup flutter environment'
+      - name: Setup flutter environment
         uses: subosito/flutter-action@v2
         with:
           flutter-version: '3.0.1'
           channel: 'stable'
           cache: true
 
-      - name: 'Cache pubspec dependencies'
+      - name: Cache pubspec dependencies
         uses: actions/cache@v2
         with:
           path: |
@@ -43,16 +38,26 @@ jobs:
           restore-keys: |
             build-pubspec-
 
-      - name: 'Run lint'
-        run: flutter analyze
+      - name: Get Flutter Packages
+        run: flutter pub get
 
-      - name: 'Run test'
+      - name: Add problem matcher
+        run: echo "::add-matcher::.github/analyzer-problem-matcher.json"
+
+      - name: Run lint
+        run: flutter analyze | tee ./flutter_analyze_report.txt
+
+      - name: Run test
         run: flutter test --coverage --coverage-path=./coverage/lcov.info
 
-      - name: 'Run Code Metrics'
+      - name: Run Code Metrics
         run: flutter pub run dart_code_metrics:metrics analyze lib --reporter=github
 
-      - name: 'Upload a coverage report to Codecov'
+      - name: Upload a coverage report to Codecov
         uses: codecov/codecov-action@v3
         with:  
           files: ./coverage/lcov.info
+
+      - name: Remove problem matcher
+        if: always()
+        run: echo "::remove-matcher owner=dart-analyzer::"
