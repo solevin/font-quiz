@@ -15,8 +15,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Setup repository
-        uses: actions/checkout@v2
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
       - name: Setup flutter environment
         uses: subosito/flutter-action@v2
@@ -38,19 +38,19 @@ jobs:
           restore-keys: |
             build-pubspec-
 
-      - name: Get Flutter Packages
+      - name: Get flutter packages
         run: flutter pub get
 
       - name: Add problem matcher
         run: echo "::add-matcher::.github/analyzer-problem-matcher.json"
 
-      - name: Run lint
+      - name: Check lint
         run: flutter analyze | tee ./flutter_analyze_report.txt
 
-      - name: Run test
+      - name: Run unit test
         run: flutter test --coverage --coverage-path=./coverage/lcov.info
 
-      - name: Run Code Metrics
+      - name: Run satic analysis
         run: flutter pub run dart_code_metrics:metrics analyze lib --reporter=github
 
       - name: Upload a coverage report to Codecov
