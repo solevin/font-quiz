@@ -14,5 +14,11 @@
                 }
             ]
         }
+    ],
+    "severityMatcher": [
+        {
+            "regexp": "^info$",
+            "severity": "notice"
+        }
     ]
 }
