@@ -69,7 +69,7 @@ jobs:
         uses: dart-code-checker/dart-code-metrics-action@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          folders: ["lib"]
+          folders: [lib]
           pull_request_comment: true
           fatal_warnings: true
           fatal_performance: true
