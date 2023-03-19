@@ -2,6 +2,9 @@
     "problemMatcher": [
         {
             "owner": "dart-analyzer",
+            "serverity": {
+                "info": "warning"
+            },
             "pattern": [
                 {
                     "regexp": "^\\s*(info|warning|error)\\s•\\s(.*)\\s•\\s(.*):(\\d+):(\\d+)\\s•\\s(.*)$",
@@ -13,12 +16,6 @@
                     "code": 6
                 }
             ]
-        }
-    ],
-    "severityMatcher": [
-        {
-            "regexp": "^info$",
-            "severity": "error"
         }
     ]
 }
