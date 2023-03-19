@@ -1,7 +1,7 @@
 {
     "problemMatcher": [
         {
-            "owner": "dart-analyzer",
+            "owner": "lint-info-checker",
             "severity": "notice",
             "pattern": [
                 {
@@ -15,7 +15,7 @@
             ]
         },
         {
-            "owner": "dart-analyzer",
+            "owner": "lint-warning-and-error-checker",
             "pattern": [
                 {
                     "regexp": "^\\s*(warning|error)\\s•\\s(.*)\\s•\\s(.*):(\\d+):(\\d+)\\s•\\s(.*)$",
