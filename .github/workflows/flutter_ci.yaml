@@ -48,7 +48,16 @@ jobs:
         run: flutter analyze | tee ./flutter_analyze_report.txt
 
       - name: Run unit test
-        run: flutter test --coverage --coverage-path=./coverage/lcov.info
+        run: flutter test --coverage --coverage-path=./coverage/lcov.info --machine > test_report.log
+
+      - name: Report test result
+        uses: dorny/test-reporter@v1
+        if: always()
+        with:
+          name: 'flutter test'
+          path: 'test_report.log'
+          reporter: 'flutter-json'
+          fail-on-error: 'false'
 
       - name: Upload a coverage report to Codecov
         uses: codecov/codecov-action@v3
