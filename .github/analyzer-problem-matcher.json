@@ -5,7 +5,21 @@
             "severity": "notice",
             "pattern": [
                 {
-                    "regexp": "^\\s*(info|warning|error)\\s•\\s(.*)\\s•\\s(.*):(\\d+):(\\d+)\\s•\\s(.*)$",
+                    "regexp": "^\\s*(info)\\s•\\s(.*)\\s•\\s(.*):(\\d+):(\\d+)\\s•\\s(.*)$",
+                    "message": 2,
+                    "file": 3,
+                    "line": 4,
+                    "column": 5,
+                    "code": 6
+                }
+            ]
+        },
+        {
+            "owner": "dart-analyzer",
+            "pattern": [
+                {
+                    "regexp": "^\\s*(warning|error)\\s•\\s(.*)\\s•\\s(.*):(\\d+):(\\d+)\\s•\\s(.*)$",
+                    "severity": 1,
                     "message": 2,
                     "file": 3,
                     "line": 4,
