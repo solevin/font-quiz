@@ -72,7 +72,7 @@ jobs:
       #   run: echo "::remove-matcher owner=dart-analyzer::"
 
       - name: Setup Ruby
-        uses: ruby/setup-ruby@v1
+        uses: ruby/setup-ruby@v2
         if: always()
         with:
           ruby-version: '2.7'
