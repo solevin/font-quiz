@@ -74,8 +74,6 @@ jobs:
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         if: always()
-        with:
-          ruby-version: '2.7'
 
       - name: Danger
         uses: MeilCli/danger-action@v5
