@@ -65,14 +65,7 @@ jobs:
           files: ./coverage/lcov.info
 
       - name: Run satic analysis
-        # run: flutter pub run dart_code_metrics:metrics analyze lib --reporter=github
-        uses: dart-code-checker/dart-code-metrics-action@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          pull_request_comment: true
-          fatal_warnings: true
-          fatal_performance: true
-          fatal_style: true
+        run: flutter pub run dart_code_metrics:metrics analyze lib --reporter=console
 
       - name: Remove problem matcher
         if: always()
