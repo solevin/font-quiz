@@ -50,13 +50,13 @@ jobs:
       - name: Run unit test
         run: flutter test --coverage --coverage-path=./coverage/lcov.info
 
-      - name: Run satic analysis
-        run: flutter pub run dart_code_metrics:metrics analyze lib --reporter=github
-
       - name: Upload a coverage report to Codecov
         uses: codecov/codecov-action@v3
         with:  
           files: ./coverage/lcov.info
+
+      - name: Run satic analysis
+        run: flutter pub run dart_code_metrics:metrics analyze lib --reporter=github
 
       - name: Remove problem matcher
         if: always()
