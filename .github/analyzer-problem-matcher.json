@@ -18,7 +18,7 @@
     "severityMatcher": [
         {
             "regexp": "^info$",
-            "severity": "notice"
+            "severity": "warning"
         }
     ]
 }
