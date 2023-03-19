@@ -8,7 +8,7 @@ void main() {
       // fromMap()メソッドに、適切なMapを渡したときに、
       // そのMapから正しいFontインスタンスが生成されることをテストする。
       final fontMap = <String, dynamic>{
-        'id': 2, // fact
+        'id': 1,
         'name': 'Roboto',
         'difficulty': 3,
         'is_favorite': 1,
