@@ -6,7 +6,6 @@
             "pattern": [
                 {
                     "regexp": "^\\s*(info|warning|error)\\s•\\s(.*)\\s•\\s(.*):(\\d+):(\\d+)\\s•\\s(.*)$",
-                    "severity": 1,
                     "message": 2,
                     "file": 3,
                     "line": 4,
