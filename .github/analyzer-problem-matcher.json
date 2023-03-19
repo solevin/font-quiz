@@ -30,10 +30,10 @@
         },
         {
             "owner": "dart-code-metrics-warning-checker",
+            "severity": "warning",
             "pattern": [
                 {
                     "regexp": "^\\s*(WARNING)\\s*(.*)$",
-                    "severity": 1,
                     "message": 2
                 },
                 {
