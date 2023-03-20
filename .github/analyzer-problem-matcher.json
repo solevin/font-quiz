@@ -33,6 +33,7 @@
             "pattern": [
                 {
                     "regexp": "^\\s*(WARNING)\\s*(.*)$",
+                    "severity": 1,
                     "message": 2
                 },
                 {
