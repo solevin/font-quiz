@@ -67,7 +67,7 @@ jobs:
           files: ./coverage/lcov.info
 
       - name: Check code metrics
-        run: flutter pub run dart_code_metrics:metrics analyze lib --reporter=console
+        run: flutter pub run dart_code_metrics:metrics analyze lib --reporter=console > dart_code_metrics-analyze.log
 
       - name: Remove problem matcher
         if: always()

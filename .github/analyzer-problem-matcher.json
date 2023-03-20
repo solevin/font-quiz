@@ -29,10 +29,30 @@
             ]
         },
         {
-            "owner": "dart-code-metrics-warning-checker",
+            "owner": "dart-code-metrics-style-checker",
             "pattern": [
                 {
-                    "regexp": "^\\s*(WARNING)\\s*(.*)$",
+                    "regexp": "^\\s*(STYLE)\\s*(.*)$",
+                    "severity": 1,
+                    "message": 2
+                },
+                {
+                    "regexp": "^\\s*.*(lib\/.*):(\\d*):(\\d)$",
+                    "file": 1,
+                    "line": 2,
+                    "column": 3
+                },
+                {
+                    "regexp": "^\\s*(.*)\\s*:\\s*(.*$)",
+                    "code": 1
+                }
+            ]
+        },
+        {
+            "owner": "dart-code-metrics-warning-and-error-checker",
+            "pattern": [
+                {
+                    "regexp": "^\\s*(WARNING|ERROR)\\s*(.*)$",
                     "severity": 1,
                     "message": 2
                 },
