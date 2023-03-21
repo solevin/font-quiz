@@ -84,8 +84,8 @@ jobs:
         if: always()
         run: |
           CHANGED_FILES="${{ steps.extract_changed_files.outputs.changed_files }}"
-          CHANGED_FILES="${CHANGED_FILES//$'%0A'/'\n'}"
-          CHANGED_FILES="${CHANGED_FILES//$'%0D'/'\r'}"
+          CHANGED_FILES="${CHANGED_FILES//'%0A'/$'\n'}"
+          CHANGED_FILES="${CHANGED_FILES//'%0D'/$'\r'}"
           CHANGED_FILES="${CHANGED_FILES//'%25'/'%'}"
           for FILE in CHANGED_FILES; do
             echo "$FILE"
