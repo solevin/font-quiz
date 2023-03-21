@@ -84,6 +84,9 @@ jobs:
         if: always()
         run: |
           CHANGED_FILES="${{ steps.extract_changed_files.outputs.changed_files }}"
+          CHANGED_FILES="${CHANGED_FILES//'%25'/'%'}"
+          CHANGED_FILES="${CHANGED_FILES//$'%0A'/'\n'}"
+          CHANGED_FILES="${CHANGED_FILES//$'%0D'/'\r'}"
           for FILE in CHANGED_FILES; do
             echo "$FILE"
             grep -1 -E "$FILE" dart_code_metrics-analyze.log  
