@@ -46,56 +46,54 @@ jobs:
       - name: Add problem matcher
         run: echo "::add-matcher::.github/analyzer-problem-matcher.json"
 
-      # - name: Check lint
-      #   run: flutter analyze | tee ./flutter_analyze_report.txt
+      - name: Check lint
+        run: flutter analyze | tee ./flutter_analyze_report.txt
 
-      # - name: Run unit test
-      #   run: flutter test --coverage --coverage-path=./coverage/lcov.info --machine > test_report.log
+      - name: Run unit test
+        run: flutter test --coverage --coverage-path=./coverage/lcov.info --machine > test_report.log
 
-      # - name: Report test result
-      #   uses: dorny/test-reporter@v1
-      #   if: always()
-      #   with:
-      #     name: 'flutter test'
-      #     path: 'test_report.log'
-      #     reporter: 'flutter-json'
-      #     fail-on-error: 'false'
+      - name: Report test result
+        uses: dorny/test-reporter@v1
+        if: always()
+        with:
+          name: 'flutter test'
+          path: 'test_report.log'
+          reporter: 'flutter-json'
+          fail-on-error: 'false'
 
-      # - name: Upload a coverage report to Codecov
-      #   uses: codecov/codecov-action@v3
-      #   with:
-      #     files: ./coverage/lcov.info
+      - name: Upload a coverage report to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          files: ./coverage/lcov.info
 
-      # - name: Extract changed files
-      #   id: extract_changed_files
-      #   run: |
-      #     git fetch
-      #     CHANGED_FILES=$(git diff --diff-filter=d --name-only origin/${{ github.base_ref }}...origin/${{ github.head_ref }})
-      #     CHANGED_FILES="${CHANGED_FILES//'%'/'%25'}"
-      #     CHANGED_FILES="${CHANGED_FILES//$'\n'/'%0A'}"
-      #     CHANGED_FILES="${CHANGED_FILES//$'\r'/'%0D'}"
-      #     echo "changed_files=$CHANGED_FILES" >> $GITHUB_OUTPUT
+      - name: Extract changed files
+        id: extract_changed_files
+        run: |
+          git fetch
+          CHANGED_FILES=$(git diff --diff-filter=d --name-only origin/${{ github.base_ref }}...origin/${{ github.head_ref }})
+          CHANGED_FILES="${CHANGED_FILES//'%'/'%25'}"
+          CHANGED_FILES="${CHANGED_FILES//$'\n'/'%0A'}"
+          CHANGED_FILES="${CHANGED_FILES//$'\r'/'%0D'}"
+          echo "changed_files=$CHANGED_FILES" >> $GITHUB_OUTPUT
 
       - name: Check code metrics
         run: |
           flutter pub run dart_code_metrics:metrics analyze lib --reporter=console > dart_code_metrics-analyze.log || true
 
-      # - name: Annotation
-      #   if: always()
-      #   run: |
-      #     CHANGED_FILES="${{ steps.extract_changed_files.outputs.changed_files }}"
-      #     CHANGED_FILES="${CHANGED_FILES//'%0A'/$'\n'}"
-      #     CHANGED_FILES="${CHANGED_FILES//'%0D'/$'\r'}"
-      #     CHANGED_FILES="${CHANGED_FILES//'%25'/'%'}"
-      #     CHANGED_FILES="${CHANGED_FILES//'.'/"\."}"
-      #     CHANGED_FILES="${CHANGED_FILES//'/'/"\/"}"
-      #     echo "$CHANGED_FILES"
-      #     for FILE in $CHANGED_FILES; do
-      #       echo "$FILE"
-      #       grep -1 -E ".*$FILE.*" dart_code_metrics-analyze.log || [[ $? == 1 ]]
-      #     done
-
-      - run: cat dart_code_metrics-analyze.log
+      - name: Annotation
+        if: always()
+        run: |
+          CHANGED_FILES="${{ steps.extract_changed_files.outputs.changed_files }}"
+          CHANGED_FILES="${CHANGED_FILES//'%0A'/$'\n'}"
+          CHANGED_FILES="${CHANGED_FILES//'%0D'/$'\r'}"
+          CHANGED_FILES="${CHANGED_FILES//'%25'/'%'}"
+          CHANGED_FILES="${CHANGED_FILES//'.'/"\."}"
+          CHANGED_FILES="${CHANGED_FILES//'/'/"\/"}"
+          echo "$CHANGED_FILES"
+          for FILE in $CHANGED_FILES; do
+            echo "$FILE"
+            grep -1 -E ".*$FILE.*" dart_code_metrics-analyze.log || [[ $? == 1 ]]
+          done
 
       - name: Remove problem matcher
         if: always()
