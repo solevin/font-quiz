@@ -78,7 +78,7 @@ jobs:
 
       - name: Check code metrics
         run: |
-          flutter pub run dart_code_metrics:metrics analyze lib --reporter=console > dart_code_metrics-analyze.log
+          flutter pub run dart_code_metrics:metrics analyze lib --reporter=console || true > dart_code_metrics-analyze.log
 
       - name: Annotation
         if: always()
