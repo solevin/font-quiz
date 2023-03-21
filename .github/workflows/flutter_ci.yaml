@@ -70,7 +70,7 @@ jobs:
         id: extract_changed_files
         run: |
           git fetch
-          CHANGED_FILES=$(git diff --diff-filter=d --name-only ${{ github.base_ref }}...${{ github.head_ref }})
+          CHANGED_FILES=$(git diff --diff-filter=d --name-only origin/${{ github.base_ref }}...origin/${{ github.head_ref }})
           echo "::set-output name=changed_files::$CHANGED_FILES"
 
       - name: Check code metrics
