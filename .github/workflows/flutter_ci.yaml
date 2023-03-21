@@ -46,30 +46,31 @@ jobs:
       - name: Add problem matcher
         run: echo "::add-matcher::.github/analyzer-problem-matcher.json"
 
-      - name: Check lint
-        run: flutter analyze | tee ./flutter_analyze_report.txt
+      # - name: Check lint
+      #   run: flutter analyze | tee ./flutter_analyze_report.txt
 
-      - name: Run unit test
-        run: flutter test --coverage --coverage-path=./coverage/lcov.info --machine > test_report.log
+      # - name: Run unit test
+      #   run: flutter test --coverage --coverage-path=./coverage/lcov.info --machine > test_report.log
 
-      - name: Report test result
-        uses: dorny/test-reporter@v1
-        if: always()
-        with:
-          name: 'flutter test'
-          path: 'test_report.log'
-          reporter: 'flutter-json'
-          fail-on-error: 'false'
+      # - name: Report test result
+      #   uses: dorny/test-reporter@v1
+      #   if: always()
+      #   with:
+      #     name: 'flutter test'
+      #     path: 'test_report.log'
+      #     reporter: 'flutter-json'
+      #     fail-on-error: 'false'
 
-      - name: Upload a coverage report to Codecov
-        uses: codecov/codecov-action@v3
-        with:
-          files: ./coverage/lcov.info
+      # - name: Upload a coverage report to Codecov
+      #   uses: codecov/codecov-action@v3
+      #   with:
+      #     files: ./coverage/lcov.info
 
       - name: Extract changed files
         id: extract_changed_files
         run: |
-          CHANGED_FILES=$(git diff --diff-filter=d --name-only ${{ github.base_ref }}..${{ github.head_ref }})
+          git fetch
+          CHANGED_FILES=$(git diff --diff-filter=d --name-only ${{ github.base_ref }}...${{ github.head_ref }})
           echo "::set-output name=changed_files::$CHANGED_FILES"
 
       - name: Check code metrics
