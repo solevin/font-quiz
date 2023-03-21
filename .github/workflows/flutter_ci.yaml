@@ -90,7 +90,7 @@ jobs:
           echo "$CHANGED_FILES"
           for FILE in $CHANGED_FILES; do
             echo "$FILE"
-            grep -1 -E "$FILE" dart_code_metrics-analyze.log  
+            grep -1 -E "$FILE" dart_code_metrics-analyze.log || [[ $? == 1 ]]
           done
 
       - name: Remove problem matcher
