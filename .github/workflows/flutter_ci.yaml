@@ -71,6 +71,9 @@ jobs:
         run: |
           git fetch
           CHANGED_FILES=$(git diff --diff-filter=d --name-only origin/${{ github.base_ref }}...origin/${{ github.head_ref }})
+          CHANGED_FILES="${CHANGED_FILES//'%'/'%25'}"
+          CHANGED_FILES="${CHANGED_FILES//$'\n'/'%0A'}"
+          CHANGED_FILES="${CHANGED_FILES//$'\r'/'%0D'}"
           echo "changed_files=$CHANGED_FILES" >> $GITHUB_OUTPUT
 
       - name: Check code metrics
