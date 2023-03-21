@@ -87,10 +87,11 @@ jobs:
           CHANGED_FILES="${CHANGED_FILES//'%0A'/$'\n'}"
           CHANGED_FILES="${CHANGED_FILES//'%0D'/$'\r'}"
           CHANGED_FILES="${CHANGED_FILES//'%25'/'%'}"
-          for FILE in CHANGED_FILES; do
-            echo "$FILE"
+          echo $CHANGED_FILES
+          : # for FILE in CHANGED_FILES; do
+            : # echo "$FILE"
             : # grep -1 -E "$FILE" dart_code_metrics-analyze.log  
-          done
+          : # done
 
       - name: Remove problem matcher
         if: always()
