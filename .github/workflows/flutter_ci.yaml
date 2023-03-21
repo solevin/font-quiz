@@ -63,13 +63,13 @@ jobs:
 
       - name: Upload a coverage report to Codecov
         uses: codecov/codecov-action@v3
-        with:  
+        with:
           files: ./coverage/lcov.info
 
       - name: Extract changed files
         id: extract_changed_files
         run: |
-          CHANGED_FILES=$(git diff --name-only ${{ github.base_ref }}...${{ github.head_ref }})
+          CHANGED_FILES=$(git diff --diff-filter=d --name-only ${{ github.base_ref }} ${{ github.head_ref }})
           echo "::set-output name=changed_files::$CHANGED_FILES"
 
       - name: Check code metrics
