@@ -17,31 +17,31 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-        with:
-          fetch-depth: 100
+        # with:
+        #   fetch-depth: 100
 
-      - name: Setup flutter environment
-        uses: subosito/flutter-action@v2
-        with:
-          flutter-version: '3.7.7'
-          channel: 'stable'
-          cache: true
+      # - name: Setup flutter environment
+      #   uses: subosito/flutter-action@v2
+      #   with:
+      #     flutter-version: '3.7.7'
+      #     channel: 'stable'
+      #     cache: true
 
-      - name: Cache pubspec dependencies
-        uses: actions/cache@v3
-        with:
-          path: |
-            ${{ env.FLUTTER_HOME }}/.pub-cache
-            **/.packages
-            **/.flutter-plugins
-            **/.flutter-plugin-dependencies
-            **/.dart_tool/package_config.json
-          key: build-pubspec-${{ hashFiles('**/pubspec.lock') }}
-          restore-keys: |
-            build-pubspec-
+      # - name: Cache pubspec dependencies
+      #   uses: actions/cache@v3
+      #   with:
+      #     path: |
+      #       ${{ env.FLUTTER_HOME }}/.pub-cache
+      #       **/.packages
+      #       **/.flutter-plugins
+      #       **/.flutter-plugin-dependencies
+      #       **/.dart_tool/package_config.json
+      #     key: build-pubspec-${{ hashFiles('**/pubspec.lock') }}
+      #     restore-keys: |
+      #       build-pubspec-
 
-      - name: Get flutter packages
-        run: flutter pub get
+      # - name: Get flutter packages
+      #   run: flutter pub get
 
       - name: Add problem matcher
         run: echo "::add-matcher::.github/analyzer-problem-matcher.json"
