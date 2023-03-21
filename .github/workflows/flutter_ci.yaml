@@ -66,8 +66,19 @@ jobs:
         with:  
           files: ./coverage/lcov.info
 
+      - name: Extract changed files
+        id: extract_changed_files
+        run: |
+          CHANGED_FILE$(git diff --name-only ${{ github.base_ref }}...${{ github.head_ref }})
+          echo "::set-output name=changed_files::$CHANGED_FILES"
+
       - name: Check code metrics
-        run: flutter pub run dart_code_metrics:metrics analyze lib --reporter=console > dart_code_metrics-analyze.log
+        run: |
+          flutter pub run dart_code_metrics:metrics analyze lib --reporter=console > dart_code_metrics-analyze.log
+          CHANGED_FILES="${{ steps.extract_changed_files.outputs.changed_files }}"
+          for FILE in CHANGED_FILES; do
+            echo "- $FILE"
+          done
 
       - name: Remove problem matcher
         if: always()
