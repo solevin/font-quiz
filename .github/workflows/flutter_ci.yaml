@@ -69,7 +69,7 @@ jobs:
       - name: Extract changed files
         id: extract_changed_files
         run: |
-          CHANGED_FILES$(git diff --name-only ${{ github.base_ref }}...${{ github.head_ref }})
+          CHANGED_FILES=$(git diff --name-only ${{ github.base_ref }}...${{ github.head_ref }})
           echo "::set-output name=changed_files::$CHANGED_FILES"
 
       - name: Check code metrics
