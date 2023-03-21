@@ -79,10 +79,14 @@ jobs:
       - name: Check code metrics
         run: |
           flutter pub run dart_code_metrics:metrics analyze lib --reporter=console > dart_code_metrics-analyze.log
+
+      - name: Annotation
+        if: always()
+        run: |
           CHANGED_FILES="${{ steps.extract_changed_files.outputs.changed_files }}"
           for FILE in CHANGED_FILES; do
             echo "$FILE"
-            grep -1 -E "at .*\/$FILE" dart_code_metrics-analyze.log  
+            grep -1 -E "$FILE" dart_code_metrics-analyze.log  
           done
 
       - name: Remove problem matcher
