@@ -89,7 +89,7 @@ jobs:
           CHANGED_FILES="${CHANGED_FILES//'%25'/'%'}"
           for FILE in CHANGED_FILES; do
             echo "$FILE"
-            grep -1 -E "$FILE" dart_code_metrics-analyze.log  
+            : # grep -1 -E "$FILE" dart_code_metrics-analyze.log  
           done
 
       - name: Remove problem matcher
