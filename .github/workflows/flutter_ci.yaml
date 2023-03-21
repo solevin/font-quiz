@@ -17,68 +17,69 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-        # with:
-        #   fetch-depth: 100
+        with:
+          fetch-depth: 100
 
-      # - name: Setup flutter environment
-      #   uses: subosito/flutter-action@v2
-      #   with:
-      #     flutter-version: '3.7.7'
-      #     channel: 'stable'
-      #     cache: true
+      - name: Setup flutter environment
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.7.7'
+          channel: 'stable'
+          cache: true
 
-      # - name: Cache pubspec dependencies
-      #   uses: actions/cache@v3
-      #   with:
-      #     path: |
-      #       ${{ env.FLUTTER_HOME }}/.pub-cache
-      #       **/.packages
-      #       **/.flutter-plugins
-      #       **/.flutter-plugin-dependencies
-      #       **/.dart_tool/package_config.json
-      #     key: build-pubspec-${{ hashFiles('**/pubspec.lock') }}
-      #     restore-keys: |
-      #       build-pubspec-
+      - name: Cache pubspec dependencies
+        uses: actions/cache@v3
+        with:
+          path: |
+            ${{ env.FLUTTER_HOME }}/.pub-cache
+            **/.packages
+            **/.flutter-plugins
+            **/.flutter-plugin-dependencies
+            **/.dart_tool/package_config.json
+          key: build-pubspec-${{ hashFiles('**/pubspec.lock') }}
+          restore-keys: |
+            build-pubspec-
 
-      # - name: Get flutter packages
-      #   run: flutter pub get
+      - name: Get flutter packages
+        run: flutter pub get
 
       - name: Add problem matcher
         run: echo "::add-matcher::.github/analyzer-problem-matcher.json"
 
-      # - name: Check lint
-      #   run: flutter analyze | tee ./flutter_analyze_report.txt
+      - name: Check lint
+        run: flutter analyze | tee ./flutter_analyze_report.txt
 
-      # - name: Run unit test
-      #   run: flutter test --coverage --coverage-path=./coverage/lcov.info --machine > test_report.log
+      - name: Run unit test
+        run: flutter test --coverage --coverage-path=./coverage/lcov.info --machine > test_report.log
 
-      # - name: Report test result
-      #   uses: dorny/test-reporter@v1
-      #   if: always()
-      #   with:
-      #     name: 'flutter test'
-      #     path: 'test_report.log'
-      #     reporter: 'flutter-json'
-      #     fail-on-error: 'false'
+      - name: Report test result
+        uses: dorny/test-reporter@v1
+        if: always()
+        with:
+          name: 'flutter test'
+          path: 'test_report.log'
+          reporter: 'flutter-json'
+          fail-on-error: 'false'
 
-      # - name: Upload a coverage report to Codecov
-      #   uses: codecov/codecov-action@v3
-      #   with:
-      #     files: ./coverage/lcov.info
+      - name: Upload a coverage report to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          files: ./coverage/lcov.info
 
       - name: Extract changed files
         id: extract_changed_files
         run: |
           git fetch
           CHANGED_FILES=$(git diff --diff-filter=d --name-only origin/${{ github.base_ref }}...origin/${{ github.head_ref }})
-          echo "::set-output name=changed_files::$CHANGED_FILES"
+          echo "changed_files=$CHANGED_FILES" >> $GITHUB_OUTPUT
 
       - name: Check code metrics
         run: |
           flutter pub run dart_code_metrics:metrics analyze lib --reporter=console > dart_code_metrics-analyze.log
           CHANGED_FILES="${{ steps.extract_changed_files.outputs.changed_files }}"
           for FILE in CHANGED_FILES; do
-            echo "- $FILE"
+            echo "$FILE"
+            grep -1 -E "at .*\/$FILE" dart_code_metrics-analyze.log  
           done
 
       - name: Remove problem matcher
