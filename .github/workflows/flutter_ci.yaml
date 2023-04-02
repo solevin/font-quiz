@@ -69,8 +69,10 @@ jobs:
       - name: Extract changed files
         id: extract_changed_files
         run: |
-          git fetch
-          git branch -a
+          : # git fetch
+          git fetch origin ${{ github.base_ref }}:${{ github.base_ref }}
+          : # git branch -a
+
           CHANGED_FILES=$(git diff --diff-filter=d --name-only origin/${{ github.base_ref }}...origin/${{ github.head_ref }})
           CHANGED_FILES="${CHANGED_FILES//'%'/'%25'}"
           CHANGED_FILES="${CHANGED_FILES//$'\n'/'%0A'}"
