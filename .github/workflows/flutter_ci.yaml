@@ -50,14 +50,14 @@ jobs:
         run: flutter analyze | tee ./flutter_analyze_report.txt
 
       - name: Run unit test
-        run: flutter test --coverage --coverage-path=./coverage/lcov.info --machine > test_report.log
+        run: flutter test --coverage --coverage-path=./coverage/lcov.info --machine > flutter_test_report.txt
 
       - name: Report test result
         uses: dorny/test-reporter@v1
         if: always()
         with:
           name: 'flutter test'
-          path: 'test_report.log'
+          path: 'flutter_test_report.txt'
           reporter: 'flutter-json'
           fail-on-error: 'false'
 
@@ -79,7 +79,7 @@ jobs:
 
       - name: Check code metrics
         run: |
-          flutter pub run dart_code_metrics:metrics analyze lib --reporter=console > dart_code_metrics-analyze.log || true
+          flutter pub run dart_code_metrics:metrics analyze lib --reporter=console > dart-code-metrics_analyze_report.txt || true
 
       - name: Annotation
         if: always()
@@ -93,7 +93,7 @@ jobs:
           echo "$CHANGED_FILES"
           for FILE in $CHANGED_FILES; do
             echo "$FILE"
-            grep -1 -E ".*$FILE.*" dart_code_metrics-analyze.log || [[ $? == 1 ]]
+            grep -1 -E ".*$FILE.*" dart-code-metrics_analyze_report.txt || [[ $? == 1 ]]
           done
 
       - name: Remove problem matcher
