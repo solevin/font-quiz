@@ -22,7 +22,8 @@ jobs:
 
       - name: test
         run: |
-          echo ${{ github.event.pull_request }}
+          git fetch ${{ github.event.pull_request.base.ref }}:${{ github.event.pull_request.base.ref }}
+          git diff --diff-filter=d --name-only HEAD..${{ github.event.pull_request.base.sha }}
 
       # - name: Setup flutter environment
       #   uses: subosito/flutter-action@v2
