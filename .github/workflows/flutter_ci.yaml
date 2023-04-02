@@ -71,7 +71,7 @@ jobs:
         run: |
           : # git fetch
           git fetch origin ${{ github.base_ref }}:${{ github.base_ref }}
-          : # git branch -a
+          git branch -a
           git diff --diff-filter=d --name-only HEAD ${{ github.base_ref }}
           : # CHANGED_FILES=$(git diff --diff-filter=d --name-only origin/${{ github.base_ref }}...origin/${{ github.head_ref }})
           : # CHANGED_FILES="${CHANGED_FILES//'%'/'%25'}"
