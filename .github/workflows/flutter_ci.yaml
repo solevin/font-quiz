@@ -22,7 +22,7 @@ jobs:
 
       - name: test
         run: |
-          echo ${{ toJson(github.event.commits) }}
+          echo ${{ github.event.commits }}
 
       # - name: Setup flutter environment
       #   uses: subosito/flutter-action@v2
