@@ -22,7 +22,7 @@ jobs:
 
       - name: test
         run: |
-          git fetch ${{ github.event.pull_request.head.ref }}:${{ github.event.pull_request.head.ref }}
+          git fetch
           git diff --diff-filter=d --name-only HEAD..${{ github.event.pull_request.base.sha }}
 
       # - name: Setup flutter environment
