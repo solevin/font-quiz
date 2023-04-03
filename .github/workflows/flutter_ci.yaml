@@ -47,10 +47,10 @@ jobs:
         run: echo "::add-matcher::.github/analyzer-problem-matcher.json"
 
       - name: Check lint
-        run: flutter analyze > ./flutter_analyze_report.txt
+        run: flutter analyze > flutter_analyze_report.txt
 
       - name: Run unit test
-        run: flutter test --coverage --coverage-path=./coverage/lcov.info --machine > flutter_test_report.txt || true
+        run: flutter test --coverage --coverage-path=./coverage/lcov.info --machine > flutter_test_report.txt
 
       - name: Report test result
         uses: dorny/test-reporter@v1
