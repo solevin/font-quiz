@@ -92,7 +92,7 @@ jobs:
           echo "$CHANGED_FILES"
           for FILE in $CHANGED_FILES; do
             echo "$FILE"
-            grep -1 -E ".*$FILE.*" fluttter_analyze_report.txt || [[ $? == 1 ]]
+            grep -1 -E ".*$FILE.*" flutter_analyze_report.txt || [[ $? == 1 ]]
           done
 
       - name: Annotation for DMC checker
