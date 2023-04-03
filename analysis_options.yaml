@@ -2,6 +2,9 @@
 include: package:pedantic_mono/analysis_options.yaml
 
 analyzer:
+  strong-mode:
+    implicit-casts: false     # 暗黙的型変換の禁止
+    implicit-dynamic: false   # 動的な宣言の禁止
   plugins:
     - dart_code_metrics
   exclude:

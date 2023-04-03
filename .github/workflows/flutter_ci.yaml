@@ -31,7 +31,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: |
-            ${FLUTTER_HOME}/.pub-cache
+            ${{ env.FLUTTER_HOME }}/.pub-cache
             **/.packages
             **/.flutter-plugins
             **/.flutter-plugin-dependencies
@@ -50,7 +50,7 @@ jobs:
         run: flutter analyze > ./flutter_analyze_report.txt
 
       - name: Run unit test
-        run: flutter test --coverage --coverage-path=./coverage/lcov.info --machine > flutter_test_report.txt
+        run: flutter test --coverage --coverage-path=./coverage/lcov.info --machine > flutter_test_report.txt || true
 
       - name: Report test result
         uses: dorny/test-reporter@v1
