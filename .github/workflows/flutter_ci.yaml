@@ -20,92 +20,99 @@ jobs:
         with:
           fetch-depth: 100
 
-      - name: test
+      - name: Setup flutter environment
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.7.7'
+          channel: 'stable'
+          cache: true
+
+      - name: Cache pubspec dependencies
+        uses: actions/cache@v3
+        with:
+          path: |
+            ${FLUTTER_HOME}/.pub-cache
+            **/.packages
+            **/.flutter-plugins
+            **/.flutter-plugin-dependencies
+            **/.dart_tool/package_config.json
+          key: build-pubspec-${{ hashFiles('**/pubspec.lock') }}
+          restore-keys: |
+            build-pubspec-
+
+      - name: Get flutter packages
+        run: flutter pub get
+
+      - name: Add problem matcher
+        run: echo "::add-matcher::.github/analyzer-problem-matcher.json"
+
+      - name: Check lint
+        run: flutter analyze > ./flutter_analyze_report.txt
+
+      - name: Run unit test
+        run: flutter test --coverage --coverage-path=./coverage/lcov.info --machine > flutter_test_report.txt
+
+      - name: Report test result
+        uses: dorny/test-reporter@v1
+        if: always()
+        with:
+          name: 'flutter test'
+          path: 'flutter_test_report.txt'
+          reporter: 'flutter-json'
+          fail-on-error: 'false'
+
+      - name: Upload a coverage report to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          files: ./coverage/lcov.info
+
+      - name: Extract changed files
+        id: extract_changed_files
         run: |
           git fetch
-          git diff --diff-filter=d --name-only ${{ github.event.pull_request.base.sha }}..HEAD
+          CHANGED_FILES=$(git diff --diff-filter=d --name-only ${{ github.event.pull_request.base.sha }}..HEAD)
+          CHANGED_FILES="${CHANGED_FILES//'%'/'%25'}"
+          CHANGED_FILES="${CHANGED_FILES//$'\n'/'%0A'}"
+          CHANGED_FILES="${CHANGED_FILES//$'\r'/'%0D'}"
+          echo "changed_files=$CHANGED_FILES" >> $GITHUB_OUTPUT
 
-      # - name: Setup flutter environment
-      #   uses: subosito/flutter-action@v2
-      #   with:
-      #     flutter-version: '3.7.7'
-      #     channel: 'stable'
-      #     cache: true
+      - name: Check code metrics
+        run: |
+          flutter pub run dart_code_metrics:metrics analyze lib --reporter=console > dart-code-metrics_analyze_report.txt || true
 
-      # - name: Cache pubspec dependencies
-      #   uses: actions/cache@v3
-      #   with:
-      #     path: |
-      #       ${{ env.FLUTTER_HOME }}/.pub-cache
-      #       **/.packages
-      #       **/.flutter-plugins
-      #       **/.flutter-plugin-dependencies
-      #       **/.dart_tool/package_config.json
-      #     key: build-pubspec-${{ hashFiles('**/pubspec.lock') }}
-      #     restore-keys: |
-      #       build-pubspec-
+      - name: Annotation for lint checker
+        if: always()
+        run: |
+          CHANGED_FILES="${{ steps.extract_changed_files.outputs.changed_files }}"
+          CHANGED_FILES="${CHANGED_FILES//'%0A'/$'\n'}"
+          CHANGED_FILES="${CHANGED_FILES//'%0D'/$'\r'}"
+          CHANGED_FILES="${CHANGED_FILES//'%25'/'%'}"
+          CHANGED_FILES="${CHANGED_FILES//'.'/"\."}"
+          CHANGED_FILES="${CHANGED_FILES//'/'/"\/"}"
+          echo "$CHANGED_FILES"
+          for FILE in $CHANGED_FILES; do
+            echo "$FILE"
+            grep -1 -E ".*$FILE.*" fluttter_analyze_report.txt || [[ $? == 1 ]]
+          done
 
-      # - name: Get flutter packages
-      #   run: flutter pub get
+      - name: Annotation for DMC checker
+        if: always()
+        run: |
+          CHANGED_FILES="${{ steps.extract_changed_files.outputs.changed_files }}"
+          CHANGED_FILES="${CHANGED_FILES//'%0A'/$'\n'}"
+          CHANGED_FILES="${CHANGED_FILES//'%0D'/$'\r'}"
+          CHANGED_FILES="${CHANGED_FILES//'%25'/'%'}"
+          CHANGED_FILES="${CHANGED_FILES//'.'/"\."}"
+          CHANGED_FILES="${CHANGED_FILES//'/'/"\/"}"
+          echo "$CHANGED_FILES"
+          for FILE in $CHANGED_FILES; do
+            echo "$FILE"
+            grep -1 -E ".*$FILE.*" dart-code-metrics_analyze_report.txt || [[ $? == 1 ]]
+          done
 
-      # - name: Add problem matcher
-      #   run: echo "::add-matcher::.github/analyzer-problem-matcher.json"
-
-      # - name: Check lint
-      #   run: flutter analyze | tee ./flutter_analyze_report.txt
-
-      # - name: Run unit test
-      #   run: flutter test --coverage --coverage-path=./coverage/lcov.info --machine > flutter_test_report.txt
-
-      # - name: Report test result
-      #   uses: dorny/test-reporter@v1
-      #   if: always()
-      #   with:
-      #     name: 'flutter test'
-      #     path: 'flutter_test_report.txt'
-      #     reporter: 'flutter-json'
-      #     fail-on-error: 'false'
-
-      # - name: Upload a coverage report to Codecov
-      #   uses: codecov/codecov-action@v3
-      #   with:
-      #     files: ./coverage/lcov.info
-
-      # - name: Extract changed files
-      #   id: extract_changed_files
-      #   run: |
-      #     : # git fetch
-      #     git fetch origin ${{ github.base_ref }}:${{ github.base_ref }}
-      #     git branch -a
-      #     git diff --diff-filter=d --name-only HEAD ${{ github.base_ref }}
-      #     : # CHANGED_FILES=$(git diff --diff-filter=d --name-only origin/${{ github.base_ref }}...origin/${{ github.head_ref }})
-      #     : # CHANGED_FILES="${CHANGED_FILES//'%'/'%25'}"
-      #     : # CHANGED_FILES="${CHANGED_FILES//$'\n'/'%0A'}"
-      #     : # CHANGED_FILES="${CHANGED_FILES//$'\r'/'%0D'}"
-      #     : # echo "changed_files=$CHANGED_FILES" >> $GITHUB_OUTPUT
-
-      # - name: Check code metrics
-      #   run: |
-      #     flutter pub run dart_code_metrics:metrics analyze lib --reporter=console > dart-code-metrics_analyze_report.txt || true
-
-      # - name: Annotation
-      #   if: always()
-      #   run: |
-      #     CHANGED_FILES="${{ steps.extract_changed_files.outputs.changed_files }}"
-      #     CHANGED_FILES="${CHANGED_FILES//'%0A'/$'\n'}"
-      #     CHANGED_FILES="${CHANGED_FILES//'%0D'/$'\r'}"
-      #     CHANGED_FILES="${CHANGED_FILES//'%25'/'%'}"
-      #     CHANGED_FILES="${CHANGED_FILES//'.'/"\."}"
-      #     CHANGED_FILES="${CHANGED_FILES//'/'/"\/"}"
-      #     echo "$CHANGED_FILES"
-      #     for FILE in $CHANGED_FILES; do
-      #       echo "$FILE"
-      #       grep -1 -E ".*$FILE.*" dart-code-metrics_analyze_report.txt || [[ $? == 1 ]]
-      #     done
-
-      # - name: Remove problem matcher
-      #   if: always()
-      #   run: echo "::remove-matcher owner=dart-analyzer::"
+      - name: Remove problem matcher
+        if: always()
+        run: echo "::remove-matcher owner=dart-analyzer::"
 
       # - name: Setup Ruby
       #   uses: ruby/setup-ruby@v1
