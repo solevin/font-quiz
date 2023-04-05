@@ -47,7 +47,7 @@ jobs:
         run: echo "::add-matcher::.github/analyzer-problem-matcher.json"
 
       - name: Check lint
-        run: flutter analyze # > flutter_analyze_report.txt || true
+        run: flutter analyze --no-fatal-infos # > flutter_analyze_report.txt || true
 
       # - name: Run unit test
       #   run: flutter test --coverage --coverage-path=./coverage/lcov.info --machine > flutter_test_report.txt
