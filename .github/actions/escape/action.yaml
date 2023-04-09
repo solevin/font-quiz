@@ -16,7 +16,7 @@ runs:
             uses: actions/github-script@v6
             id: escape
             with: 
-            script: |
-                const name = 'escaped'
-                const value = '${input.target}'
-                core.setOutput(name, value)
+                script: |
+                    const name = 'escaped'
+                    const value = '${input.target}'
+                    core.setOutput(name, value)
