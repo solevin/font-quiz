@@ -7,7 +7,15 @@ name: Flutter CI
 
 on:
   workflow_dispatch:
+    inputs:
+      flutter-version:
+        required: true
+        type: string
   workflow_call:
+    inputs:
+      flutter-version:
+        required: true
+        type: string      
 
 jobs:
   flutter-ci:
@@ -24,19 +32,8 @@ jobs:
           flutter-version: '3.7.7'
           channel: 'stable'
           cache: true
-
-      - name: Cache pubspec dependencies
-        uses: actions/cache@v3
-        with:
-          path: |
-            ${{ env.FLUTTER_HOME }}/.pub-cache
-            **/.packages
-            **/.flutter-plugins
-            **/.flutter-plugin-dependencies
-            **/.dart_tool/package_config.json
-          key: build-pubspec-${{ hashFiles('**/pubspec.lock') }}
-          restore-keys: |
-            build-pubspec-
+          cache-key: flutter
+          cache-path: ${{ runner.tool_cache }}/flutter
 
       - name: Get flutter packages
         run: flutter pub get

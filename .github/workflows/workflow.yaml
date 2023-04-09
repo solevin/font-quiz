@@ -6,5 +6,11 @@ on:
   workflow_dispatch:
 
 jobs:
-  flutter-ci:
-    uses: ./.github/workflows/flutter-ci.yaml
+#   flutter-ci:
+#     uses: ./.github/workflows/flutter-ci.yaml
+#     with:
+#         flutter-version: 3.7.7
+    test:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: ./.github/workflows/common/escape/action.yaml

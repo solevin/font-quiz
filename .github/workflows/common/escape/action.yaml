@@ -1,0 +1,23 @@
+name: "Escape Action"
+description: "Escape Action"
+
+inputs:
+    target:
+        required: true
+        type: string
+outputs:
+    escaped:
+        type: string
+        value: ${{ steps.escape.outputs.escaped }}
+
+runs:
+    using: "composite"
+    steps:
+        -
+            uses: actions/github-script@v6
+            id: escape
+            with: 
+            script: |
+                const name = 'escaped'
+                const value = '${input.target}'
+                core.setOutput(name, value)
