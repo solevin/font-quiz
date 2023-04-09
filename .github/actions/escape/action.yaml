@@ -7,7 +7,6 @@ inputs:
         type: string
 outputs:
     escaped:
-        type: string
         value: ${{ steps.escape.outputs.escaped }}
 
 runs:
