@@ -6,14 +6,12 @@
 name: Flutter CI
 
 on:
-  pull_request:
-    branches: [ develop ]
   workflow_dispatch:
+  workflow_call:
 
 jobs:
-  build:
+  flutter-ci:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -47,7 +45,7 @@ jobs:
         run: echo "::add-matcher::.github/analyzer-problem-matcher.json"
 
       - name: Check lint
-        run: flutter analyze --no-fatal-infos > flutter_analyze_report.txt || true
+        run: flutter analyze > flutter_analyze_report.txt || true
 
       - name: Run unit test
         run: flutter test --coverage --coverage-path=./coverage/lcov.info --machine > flutter_test_report.txt
@@ -78,7 +76,7 @@ jobs:
 
       - name: Check code metrics
         run: |
-          flutter pub run dart_code_metrics:metrics analyze lib --reporter=console --no-fatal-infos > dart-code-metrics_analyze_report.txt || true
+          flutter pub run dart_code_metrics:metrics analyze lib --reporter=console > dart-code-metrics_analyze_report.txt || true
 
       - name: Annotation for lint checker
         if: always()

@@ -1,0 +1,10 @@
+name: Flutter CI
+
+on:
+  pull_request:
+    branches: [ develop ]
+  workflow_dispatch:
+
+jobs:
+  flutter-ci:
+    uses: ./.github/workflows/flutter-ci.yaml
