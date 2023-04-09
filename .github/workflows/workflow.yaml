@@ -13,4 +13,4 @@ jobs:
     test:
         runs-on: ubuntu-latest
         steps:
-            - uses: ./.github/workflows/common/escape/action.yaml
+            - uses: ./.github/workflows/common/escape
