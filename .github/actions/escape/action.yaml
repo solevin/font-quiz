@@ -18,5 +18,5 @@ runs:
             with: 
                 script: |
                     const name = 'escaped'
-                    const value = '${input.target}'
+                    const value = '${{ input.target }}'
                     core.setOutput(name, value)
