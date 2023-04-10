@@ -24,6 +24,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
         with:
+          token: ${{ secrets.GITHUB_TOKEN }}
           fetch-depth: 100
 
       # - name: Setup flutter environment
@@ -73,10 +74,10 @@ jobs:
 
       - name: Get changed files
         uses: ./.github/actions/get-chaged-files
-        id: get-changed-files
+        id: changed-files
 
       - run: |
-          echo "${{ steps.escape.outputs.changedFiles }}"
+          echo "${{ steps.changed-files.outputs.changed-files }}"
 
       # - name: Check code metrics
       #   run: |
