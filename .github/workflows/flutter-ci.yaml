@@ -73,13 +73,7 @@ jobs:
 
       - name: Get changed files
         uses: ./.github/actions/get-chaged-files
-        id: escape
-        with:
-          script: |
-            const { execSync } = require('child_process')
-            execSync('git fetch')
-            const changedFiles = execSync('git diff --diff-filter=d --name-only ${{ github.event.pull_request.base.sha }}..HEAD')
-            core.setOutput('changedFiles', changedFiles.toString())
+        id: get-changed-files
 
       - run: |
           echo "${{ steps.escape.outputs.changedFiles }}"
