@@ -71,8 +71,8 @@ jobs:
       #     : # CHANGED_FILES="${CHANGED_FILES//$'\r'/'%0D'}"
       #     echo "changed_files=$CHANGED_FILES" >> $GITHUB_OUTPUT
 
-      - name: Escape string
-        uses: actions/github-script@v6
+      - name: Get changed files
+        uses: ./.github/actions/get-chaged-files
         id: escape
         with:
           script: |

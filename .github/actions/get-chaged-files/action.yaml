@@ -1,0 +1,20 @@
+name: Get changed files
+
+
+inputs:
+outputs:
+  changed-files:
+    value: ${{ steps.escape.outputs.changed-files }}
+
+runs:
+  using: "composite"
+  steps:
+    - name: Get changed files
+      uses: actions/github-script@v6
+      id: changed-files
+      with:
+        script: |
+          const { execSync } = require('child_process')
+          execSync('git fetch')
+          const changedFiles = execSync('git diff --diff-filter=d --name-only ${{ github.event.pull_request.base.sha }}..HEAD')
+          core.setOutput('changedFiles', changedFiles.toString())
