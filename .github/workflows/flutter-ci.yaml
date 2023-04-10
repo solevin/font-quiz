@@ -66,6 +66,7 @@ jobs:
           flutter pub run dart_code_metrics:metrics analyze lib --reporter=console > dart-code-metrics_analyze_report.txt || true
 
       - name: Get changed files
+        if: always()
         uses: ./.github/actions/get-chaged-files
         id: changed-files
 
