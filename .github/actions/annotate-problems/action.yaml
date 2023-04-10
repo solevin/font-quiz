@@ -24,7 +24,7 @@ runs:
           grep -1 -E ".*$FILE.*" $ANALYSIS_REPORT_PATH || [[ $? == 1 ]]
         done
       env:
-        CHANGED_FILES: ${{ inputs.matcher-config-path }}
+        CHANGED_FILES: ${{ inputs.changed-files }}
         ANALYSIS_REPORT_PATH: ${{ inputs.analysis-report-path }}
       shell: bash
     - name: Remove problem matcher
