@@ -14,5 +14,7 @@ runs:
         script: |
           const { execSync } = require('child_process')
           execSync('git fetch')
-          const changedFiles = execSync('git diff --diff-filter=d --name-only ${{ github.event.pull_request.base.sha }}..HEAD')
+          const changedFiles = execSync('git diff --diff-filter=d --name-only $PR_BASE_SHA..HEAD')
           core.setOutput('changed-files', changedFiles.toString())
+      env:
+        PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
