@@ -15,6 +15,7 @@ runs:
       run: echo "::add-matcher::$MATCHER_CONFIG_PATH"
       env:
         MATCHER_CONFIG_PATH: ${{ inputs.matcher-config-path }}
+      shell: bash
     - name: Annotation problems
       run: |
         echo $CHANGED_FILES
@@ -25,6 +26,8 @@ runs:
       env:
         CHANGED_FILES: ${{ inputs.matcher-config-path }}
         ANALYSIS_REPORT_PATH: ${{ inputs.analysis-report-path }}
+      shell: bash
     - name: Remove problem matcher
       if: always()
       run: echo "::remove-matcher owner=analyzer::"
+      shell: bash
