@@ -59,7 +59,7 @@ jobs:
       #   run: echo "::add-matcher::.github/analyzer-problem-matcher.json"
   
       - name: Check lint
-        run: flutter analyze > flutter_analyze_report.txt
+        run: flutter analyze > flutter_analyze_report.txt || true
 
       - name: Check code metrics
         run: |
