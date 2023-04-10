@@ -19,6 +19,6 @@ jobs:
                 uses: ./.github/actions/escape/
                 id: escape
                 with:
-                    target: "aaa"
+                    target: "aaa¥nbbb¥nccc"
             -
                 run: echo "${{ steps.escape.outputs.escaped }}"
