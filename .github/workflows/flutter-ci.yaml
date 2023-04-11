@@ -1,8 +1,3 @@
-# This workflow uses actions that are not certified by GitHub.
-# They are provided by a third-party and are governed by
-# separate terms of service, privacy policy, and support
-# documentation.
-
 name: Flutter CI
 
 on:
@@ -18,7 +13,7 @@ on:
         type: string      
 
 jobs:
-  prepare:
+  job:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -37,15 +32,6 @@ jobs:
 
       - name: Get flutter packages
         run: flutter pub get
-      
-  unit-test:
-    runs-on: ubuntu-latest
-    needs: prepare
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 100
 
       - name: Run unit test
         run: flutter test --coverage --coverage-path=./coverage/lcov.info --machine > flutter_test_report.txt
@@ -63,11 +49,7 @@ jobs:
         uses: codecov/codecov-action@v3
         with:
           files: ./coverage/lcov.info
-  
-  flutter-ci:
-    runs-on: ubuntu-latest
-    needs: unit-test
-    steps:
+
       - name: Check lint
         run: flutter analyze > flutter_analyze_report.txt || true
 
@@ -84,7 +66,7 @@ jobs:
         if: always()
         uses: ./.github/actions/annotate-problems
         with:
-          matcher-config-path: .github/analyzer-problem-matcher.json
+          matcher-config-path: .github/resources/analyzer-problem-matcher.json
           analysis-report-path: ./flutter_analyze_report.txt
           changed-files: ${{ steps.changed-files.outputs.changed-files }}
 
@@ -92,26 +74,6 @@ jobs:
         if: always()
         uses: ./.github/actions/annotate-problems
         with:
-          matcher-config-path: .github/analyzer-problem-matcher.json
+          matcher-config-path: .github/resources/analyzer-problem-matcher.json
           analysis-report-path: ./dart-code-metrics_analyze_report.txt
           changed-files: ${{ steps.changed-files.outputs.changed-files }}
-
-      # - name: Setup Ruby
-      #   uses: ruby/setup-ruby@v1
-      #   if: always()
-      #   with:
-      #     ruby-version: '2.7'
-
-      # - name: Install bundler
-      #   run: gem install bundler
-
-      # - name: Create pull-req omment 
-      #   uses: MeilCli/danger-action@v5
-      #   if: always()
-      #   with:
-      #     plugins_file: '.github/Gemfile'
-      #     install_path: 'vendor/bundle'
-      #     danger_file: '.github/Dangerfile'
-      #     danger_id: 'danger-pr'
-      #   env:
-      #     DANGER_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
