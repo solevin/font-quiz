@@ -1,81 +1,12 @@
 name: Flutter CI
 
 on:
+  pull_request:
+    branches: [ develop ]
   workflow_dispatch:
-    inputs:
-      flutter-version:
-        required: true
-        type: string
-  workflow_call:
-    inputs:
-      flutter-version:
-        required: true
-        type: string      
 
 jobs:
-  job:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 100
-
-      - name: Setup flutter environment
-        uses: subosito/flutter-action@v2
-        with:
-          flutter-version: '3.7.7'
-          channel: 'stable'
-          cache: true
-          cache-key: flutter
-          cache-path: ${{ runner.tool_cache }}/flutter
-
-      - name: Get flutter packages
-        run: flutter pub get
-
-      - name: Run unit test
-        run: flutter test --coverage --coverage-path=./coverage/lcov.info --machine > flutter_test_report.txt
-
-      - name: Report test result
-        uses: dorny/test-reporter@v1
-        if: always()
-        with:
-          name: 'flutter test'
-          path: 'flutter_test_report.txt'
-          reporter: 'flutter-json'
-          fail-on-error: 'false'
-
-      - name: Upload a coverage report to Codecov
-        uses: codecov/codecov-action@v3
-        with:
-          files: ./coverage/lcov.info
-
-      - name: Check lint
-        run: flutter analyze > flutter_analyze_report.txt || true
-
-      - name: Check code metrics
-        run: |
-          flutter pub run dart_code_metrics:metrics analyze lib --reporter=console > dart-code-metrics_analyze_report.txt || true
-
-      - name: Get changed files
-        if: always()
-        uses: ./.github/actions/get-chaged-files
-        id: changed-files
-
-      - name: Annotation for lint checker
-        if: always()
-        uses: ./.github/actions/annotate-problems
-        with:
-          matcher-config-path: .github/resources/analyzer-problem-matcher.json
-          analysis-report-path: ./flutter_analyze_report.txt
-          changed-files: ${{ steps.changed-files.outputs.changed-files }}
-
-      - name: Annotation for DMC checker
-        if: always()
-        uses: ./.github/actions/annotate-problems
-        with:
-          matcher-config-path: .github/resources/analyzer-problem-matcher.json
-          analysis-report-path: ./dart-code-metrics_analyze_report.txt
-          changed-files: ${{ steps.changed-files.outputs.changed-files }}
-
-          
+  flutter-ci:
+    uses: solevin/action-library/.github/workflows/flutter-ci.yaml@main
+    with:
+      flutter-version: 3.7.7
