@@ -1,4 +1,5 @@
 
+
 class HiScore {
   HiScore({
     this.id,

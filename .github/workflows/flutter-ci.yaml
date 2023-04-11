@@ -1,0 +1,12 @@
+name: Flutter CI
+
+on:
+  pull_request:
+    branches: [ develop ]
+  workflow_dispatch:
+
+jobs:
+  flutter-ci:
+    uses: solevin/action-library/.github/workflows/flutter-ci.yaml@main
+    with:
+      flutter-version: 3.7.7
