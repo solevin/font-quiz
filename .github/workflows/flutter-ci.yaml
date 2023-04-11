@@ -90,6 +90,14 @@ jobs:
           analysis-report-path: ./flutter_analyze_report.txt
           changed-files: ${{ steps.changed-files.outputs.changed-files }}
 
+      - name: Annotation for DMC checker
+        if: always()
+        uses: ./.github/actions/annotate-problems
+        with:
+          matcher-config-path: .github/analyzer-problem-matcher.json
+          analysis-report-path: ./dart-code-metrics_analyze_report.txt
+          changed-files: ${{ steps.changed-files.outputs.changed-files }}
+
       # - name: Annotation for DMC checker
       #   if: always()
       #   run: |
