@@ -7,6 +7,19 @@ on:
 
 jobs:
   flutter-ci:
-    uses: solevin/action-library/.github/workflows/flutter-ci.yaml@main
-    with:
-      flutter-version: 3.7.7
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          repository: solevin/action-libarary
+          token: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Execute CI
+        uses: solevin/action-library/.github/workflows/flutter-ci.yaml@main
+        with:
+          flutter-version: 3.7.7
+
+    # uses: solevin/action-library/.github/workflows/flutter-ci.yaml@main
+    # with:
+    #   flutter-version: 3.7.7
