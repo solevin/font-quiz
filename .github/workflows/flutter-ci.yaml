@@ -18,7 +18,7 @@ on:
         type: string      
 
 jobs:
-  flutter-ci:
+  prepare:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -37,7 +37,10 @@ jobs:
 
       - name: Get flutter packages
         run: flutter pub get
-
+  flutter-ci:
+    runs-on: ubuntu-latest
+    needs: prepare
+    steps:
       - name: Run unit test
         run: flutter test --coverage --coverage-path=./coverage/lcov.info --machine > flutter_test_report.txt
 
@@ -55,9 +58,6 @@ jobs:
         with:
           files: ./coverage/lcov.info
 
-      # - name: Add problem matcher
-      #   run: echo "::add-matcher::.github/analyzer-problem-matcher.json"
-  
       - name: Check lint
         run: flutter analyze > flutter_analyze_report.txt || true
 
@@ -69,18 +69,6 @@ jobs:
         if: always()
         uses: ./.github/actions/get-chaged-files
         id: changed-files
-
-      # - name: Annotation for lint checker
-      #   if: always()
-      #   run: |
-      #     echo $CHANGED_FILES
-      #     for FILE in $CHANGED_FILES; do
-      #       echo "$FILE"
-      #       grep -1 -E ".*$FILE.*" $LOG_FILE_PATH || [[ $? == 1 ]]
-      #     done
-      #   env:
-      #     CHANGED_FILES: ${{ steps.changed-files.outputs.changed-files }}
-      #     LOG_FILE_PATH: ./flutter_analyze_report.txt
 
       - name: Annotation for lint checker
         if: always()
@@ -97,22 +85,6 @@ jobs:
           matcher-config-path: .github/analyzer-problem-matcher.json
           analysis-report-path: ./dart-code-metrics_analyze_report.txt
           changed-files: ${{ steps.changed-files.outputs.changed-files }}
-
-      # - name: Annotation for DMC checker
-      #   if: always()
-      #   run: |
-      #     echo $CHANGED_FILES
-      #     for FILE in $CHANGED_FILES; do
-      #       echo "$FILE"
-      #       grep -1 -E ".*$FILE.*" $LOG_FILE_PATH || [[ $? == 1 ]]
-      #     done
-      #   env:
-      #     CHANGED_FILES: ${{ steps.changed-files.outputs.changed-files }}
-      #     LOG_FILE_PATH: ./dart-code-metrics_analyze_report.txt
-
-      # - name: Remove problem matcher
-      #   if: always()
-      #   run: echo "::remove-matcher owner=dart-analyzer::"
 
       # - name: Setup Ruby
       #   uses: ruby/setup-ruby@v1
