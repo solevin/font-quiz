@@ -7,7 +7,7 @@ on:
 
 jobs:
     flutter-ci:
-        uses: ./.github/workflows/flutter-ci.yaml
+        uses: solevin/action-library/.github/workflows/flutter-ci.yaml@main
         with:
             flutter-version: 3.7.7
     # test:
